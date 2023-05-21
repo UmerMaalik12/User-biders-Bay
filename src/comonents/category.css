@@ -1,0 +1,28 @@
+.bigDiv {
+  display: flex;
+  justify-content: center;
+}
+.head {
+  width: 140px;
+  height: 140px;
+  margin-left: 50px;
+  margin-top: 10px;
+  text-align: center;
+  font-family: arial;
+  padding-bottom: 30px;
+}
+.second {
+  height: 10em;
+}
+
+.Headimage {
+  width: 100%;
+  height: 10em;
+  object-fit: fill;
+  border-radius: 50%;
+}
+.Headtitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
