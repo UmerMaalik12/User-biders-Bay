@@ -1,2 +1,2 @@
-const BASE_URL = `http://localhost:5002/`;
+const BASE_URL = `http://api.biddersbay.online/`;
 export {BASE_URL};

@@ -19,7 +19,7 @@ export default function ActionAreaCard({
   date,
   name
 }) {
-  const MAX_TITLE_LENGTH = 19;
+  const MAX_TITLE_LENGTH = 17;
 
   const [check, setcheck] = useState(0);
   const truncatedTitle =
@@ -143,7 +143,7 @@ export default function ActionAreaCard({
         </Box>
 
         <Typography variant="body2" color="text.secondary">
-          {price}
+          {"RS."}{price}
         </Typography>
         <Typography >
           {name=="bid"?<Coundown time={date}></Coundown>:null}

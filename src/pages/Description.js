@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Slider from "../comonents/slider/Slider";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import { useLocation } from "react-router-dom";
 import {
   Button,
@@ -43,6 +47,8 @@ export default function (props) {
   const [rating, setRating] = useState(null);
   const [bid, SetBid] = useState(" ");
   const [bidInfo, setBidInfo] = useState(null);
+  const [expanded, setExpanded] = useState(false);
+  const [allBids,setAllBids]=useState([])
 
   const [check, setcheck] = useState(0);
 
@@ -111,6 +117,22 @@ export default function (props) {
       .catch((error) => {
         console.log(error);
       });
+
+      api
+      .get(`/bidding/${y}`)
+      .then(function (response) {
+        console.log(
+          "all bids",
+          response.data.allBidsOfPost
+          );
+          setAllBids(response.data.allBidsOfPost)
+       
+      })
+      .catch(function (error) {
+        console.log("this is error");
+      });
+    
+   
   }, []);
   useEffect(() => {
     api
@@ -183,7 +205,9 @@ export default function (props) {
         console.log("this is error");
       });
   };
-
+  const handleExpand = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   const Postbid = (bidingPrice, productId) => {
     api
       .post("/bidding/", {
@@ -402,7 +426,52 @@ export default function (props) {
                     <Typography variant="body1" color="textSecondary">
                       Rs.{bidInfo != null ? bidInfo.highestBid : "loading"}
                     </Typography>
+                    
                   </Box>
+                  <Accordion
+              expanded={expanded === "panel2"}
+              onChange={handleExpand("panel2")}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="subtitle1">
+                  All Bids
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                
+                {allBids?.map((p) => (
+                  <Box key={p._id} py={1}>
+                    <Grid container>
+                      <Grid item>
+                        <Avatar />
+                      </Grid>
+                      <Grid item ml={1}>
+                        <Stack sx={{ lineHeight: "1" }}>
+                          <Typography variant="subtitle1" color="text.disable">
+                            Name
+                          </Typography>
+                          
+                        </Stack>
+                      </Grid>
+                    </Grid>
+
+                    {/* <Typography variant="body1" py={1}>
+                      {review.title}
+                    </Typography> */}
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      lineHeight={1}
+                      pb={1}
+                      sx={{fontWeight:"bold",marginLeft:"50px"}}
+                    >
+                     {"Bid:"}{p.bidingPrice}
+                    </Typography>
+                    <Divider />
+                  </Box>
+                ))}
+              </AccordionDetails>
+            </Accordion>
                   <Type2Field
                     Label="Bid"
                     //  error={errors.password}
@@ -459,6 +528,7 @@ export default function (props) {
             </Paper>
           </Stack>
         </Grid>
+       
       </Grid>
     </Container>
   );
