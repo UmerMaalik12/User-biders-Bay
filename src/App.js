@@ -17,6 +17,7 @@ import Navbar from "./comonents/navbar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from "./comonents/Footer";
+import Otp from "./pages/Otp";
 
 
 const theme = createTheme({
@@ -102,6 +103,7 @@ function App() {
           <Route path="bsprofile" element={<BuyerSellerProfile />} />
           <Route path="bseller" element={<BecomeSeller />} />
           <Route path="Search" element={<Search />} />
+          <Route path="ForgotPassword" element={<Otp />} />
        
 
           {/* <Route path="/create" element={<Create />} /> */}

@@ -176,7 +176,7 @@ const Login = (props) => {
           Sign In
         </Button>
         <Typography>
-          <Link href="#">Forgot password?</Link>
+          <Link onClick={()=>{navigate("/ForgotPassword")}} sx={{cursor:"pointer"}}>Forgot password?</Link>
         </Typography>
         <Typography>
           Do you have an account?
