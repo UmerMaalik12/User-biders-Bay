@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Grid,Box,Paper, Typography,Button,IconButton} from '@mui/material'
+import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert} from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import { Type1Field ,Type2Field} from '../comonents/formcontrol/Fields';
 import MailIcon from "@mui/icons-material/Mail";
@@ -23,6 +23,7 @@ export default function Otp() {
     const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
     const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
     const [otpValue, setOtpValue] = useState('');
+    const [dis, setdis] = useState(null);
     const [change,setChange]=useState({"oldPassword":"",
   "newPassword":"",
   "rePassword":""});
@@ -56,11 +57,13 @@ export default function Otp() {
             setMaskedMail(maskEmail(email));
             setFlag1("none")
             setFlag2("grid")
+            setdis(null)
 
           }
         })
         .catch(function (error) {
-          console.log("this is error");
+            setdis(error.response.data.error);
+         
         });
         
      }
@@ -77,9 +80,11 @@ export default function Otp() {
            
             setFlag2("none")
             setFlag3("grid")
+            setdis(null);
           }
         })
         .catch(function (error) {
+            setdis(error.response.data.message);
           console.log("this is error");
         });
     }
@@ -112,6 +117,13 @@ export default function Otp() {
   }
   return (
     <Grid>  <Box sx={theme.mixins.toolbar} />
+     {dis != null ? (
+        <Stack sx={{ width: "100%",marginTop:"40px" }} spacing={2}>
+          <Alert severity="error">{dis}</Alert>
+        </Stack>
+      ) : (
+        <div>{null}</div>
+      )}
     <Paper elevation={10} align="center" style={paperStyle}>
         <Grid  align="center" display={flag1} sx={{marginTop:"90px",width:"70%"}}>
             <Typography variant='h5'>

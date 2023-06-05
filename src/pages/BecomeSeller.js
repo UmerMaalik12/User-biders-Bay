@@ -27,8 +27,10 @@ import Stack from "@mui/material/Stack";
 import api from "../Config/Api";
 import { useTheme } from "@mui/material/styles";
 
+
 const BecomeSeller = () => {
   const navigate = useNavigate();
+  
   const theme = useTheme();
 
   const [front, setFront] = useState(null);
@@ -95,7 +97,7 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("front", response);
-        check(x+1)
+        setcheck(x+1)
       })
       .catch((error) => {
         console.log(error);
@@ -117,7 +119,7 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("back", response);
-        check(x+1)
+        setcheck(x+1)
       })
       .catch((error) => {
         console.log(error);
@@ -141,12 +143,13 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("number", response);
-        check(x+1)
+        setcheck(x+1)
       })
       .catch((error) => {
         console.log(error);
         setdis(error.response.data.message)
       });
+      console.log(check);
       if(check==3)
       {
         navigate("/account")

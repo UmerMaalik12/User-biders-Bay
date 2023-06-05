@@ -17,7 +17,7 @@ import {
 
 import api from '../Config/Api'
 
-
+import { BASE_URL } from "../Config/constant";
 import image from "../assets/logo.jpg";
 import Datepicker from "../comonents/datePicker";
 import MailIcon from "@mui/icons-material/Mail";
@@ -59,8 +59,12 @@ const Login = (props) => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
   const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
+  const [dp,setdp]=useState(null)
+  const [temp1, setTemp1] = useState(null);
   const [dis, setdis] = useState(null);
   const [info, setinfo] = useState(null);
+  const [dpCheck,setDpCheck] = useState(0);
+  
   const [change,setChange]=useState({"oldPassword":"",
   "newPassword":"",
   "rePassword":""});
@@ -181,18 +185,78 @@ const Login = (props) => {
   const handleInfo=() => {
     navigate("/bsprofile",{state:{Info:JSON.parse(localStorage.getItem("user Info"))}})
   }
+  const EditImage=(e) => {
+   
+    setdp(e.target.files[0]);
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        setTemp1(reader.result);
+      };
+     
+    }
+      
+
+    
+  }
+
+  useEffect(() => {
+    if(dp!=null)
+
+   {
+    console.log("new dp",dp);
+    let formData = new FormData(),
+    key;
+  formData.append("profile_picture", dp);
+    api.post('/users/edit/', 
+      
+    formData,
+  {
+    headers: {
+      'enctype': 'multipart/form-data' } 
+  },
+
+  )
+  .then(response => {
+    console.log("update",response.data);
+    let updatedInfo=JSON.parse(localStorage.getItem("user Info"))
+    updatedInfo.dp=response.data.data.dp
+    localStorage.setItem("user Info",JSON.stringify(updatedInfo))
+    console.log("this is dp",dp);
+    const updatedAvalue={...Avalue,dp:response.data.data.dp}
+    console.log("updated Avalue",response.data.data.dp);
+    setAvalue(updatedAvalue)
+    setDpCheck(1)
+    
+  })
+  .catch(error => {
+    console.log(error);
+
+  });
+    
+   }
+    
+   
+  },[dp])
   return (
     <Container>
       <Box sx={theme.mixins.toolbar} />
       
       <AppbarSpace></AppbarSpace>
+      <Stack sx={{ width: "100%" }} spacing={2}>
+    <Alert severity="info" >{Avalue.statusOfUser}</Alert>
+  </Stack>
       {dis !== null ? (
   <Stack sx={{ width: "100%" }} spacing={2}>
     <Alert severity="error">{dis}</Alert>
   </Stack>
 ) : info !== null ? (
   <Stack sx={{ width: "100%" }} spacing={2}>
-    <Alert severity="info">{info}</Alert>
+    <Alert severity="info" onClose={() => {setinfo(null)}}>{info}</Alert>
   </Stack>
 ) : null}
       <Paper elevation={10} style={paperStyle}>
@@ -205,6 +269,7 @@ const Login = (props) => {
             localStorage.setItem("user token",null);
             props.setToken("ok")
             props.setWhishlist([])
+            
 
             navigate("/");
           }}
@@ -215,7 +280,7 @@ const Login = (props) => {
         
         <Grid align="center" style={{ paddingBottom: 35 }}>
           <Avatar sx={{ height: 100, width: 100, fontSize: 50,marginBottom:3}} alt={Avalue.firstName}
-  src={Avalue.images}></Avatar>
+  src={Avalue.dp!=null?`${BASE_URL}${Avalue.dp}`:null}></Avatar>
   <Button sx={{backgroundColor: "black",
 
 "&:hover": {
@@ -223,7 +288,7 @@ const Login = (props) => {
   color: "white",
 }}} variant="contained" component="label">
         Change Image
-        <input  hidden accept="image/*" name='product_picture'   multiple type="file" />
+        <input  hidden accept="image/*" name='dp'   type="file" onChange={EditImage} />
       </Button>
       <Grid sx={{marginTop:"50px"}}>
       {x.role=='seller'?<Link onClick={handleInfo}>My Post</Link>:<Typography onClick={()=>{navigate("/bseller")}}> Become Seller</Typography>}
