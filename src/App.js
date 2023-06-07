@@ -18,6 +18,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from "./comonents/Footer";
 import Otp from "./pages/Otp";
+import EditPost from "./pages/EditPost";
+import FeaturePost from "./pages/FeaturePost";
 
 
 const theme = createTheme({
@@ -104,6 +106,8 @@ function App() {
           <Route path="bseller" element={<BecomeSeller />} />
           <Route path="Search" element={<Search />} />
           <Route path="ForgotPassword" element={<Otp />} />
+          <Route path="Edit" element={<EditPost />} />
+          <Route path="Feature" element={<FeaturePost />} />
        
 
           {/* <Route path="/create" element={<Create />} /> */}

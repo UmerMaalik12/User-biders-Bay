@@ -17,6 +17,7 @@ import {
   Box,
   Avatar,
   Divider,
+  Tooltip
 } from "@mui/material";
 import Navbar from "../comonents/navbar";
 import { AppbarSpace } from "../comonents/AppbarSpace";
@@ -33,6 +34,9 @@ import Rating from "../comonents/rating/rating";
 import { Link, useNavigate } from "react-router-dom";
 import Coundown from "../comonents/Coundown";
 import { useTheme } from "@mui/material/styles";
+import ModeIcon from '@mui/icons-material/Mode';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const initial = {
   comment: "",
@@ -371,19 +375,42 @@ export default function (props) {
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
+                
               >
                 {/* Price */}
                 <Typography variant="body1" sx={{ fontSize: 20 }}>
                   Rs.{location.state.x.productPrice}
                 </Typography>
                 {/* Fvrt */}
-                <IconButton disableRipple onClick={() => fav(y)}>
+                <Grid>
+               
+                  <Tooltip title="Feature Post">
+                         <IconButton sx={{color:"black"}} onClick={()=>navigate("/Feature",{ state: { ProductDetails: location.state.x }})}>
+                         <PaidIcon/>
+                       </IconButton>
+                         </Tooltip>
+                  
+                  <Tooltip title="Delete">
+                         <IconButton>
+                         <DeleteIcon sx={{color:"red"}}/>
+                       </IconButton>
+                         </Tooltip>
+                  <Tooltip title="Edit">
+                         <IconButton  sx={{color:"black"}}> 
+                         <ModeIcon   onClick={()=>navigate("/Edit",{ state: { ProductDetails: location.state.x }})}/>
+                       </IconButton>
+                         </Tooltip>
+               
+                {/* <IconButton sx={{alignContent:"end"}} disableRipple onClick={() => fav(y)}>
                   {check == 1 ? (
                     <FavoriteIcon sx={{ color: "#e81111" }} />
                   ) : (
                     <FavoriteBorderOutlinedIcon />
                   )}
-                </IconButton>
+                </IconButton> */}
+                </Grid>
+                
+               
               </Box>
 
               <Box>
