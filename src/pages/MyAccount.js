@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import {
   Grid,
   Paper,
@@ -50,6 +50,7 @@ console.log(initial);
 
 
 const Login = (props) => {
+  const alertRef = useRef(null);
   const theme = useTheme();
   const navigate = useNavigate();
   const x=JSON.parse(localStorage.getItem("user Info"))
@@ -87,7 +88,11 @@ const Login = (props) => {
   },[Avalue.dob]);
   useEffect(() => {
 
+
     setAvalue(JSON.parse(localStorage.getItem("user Info")))
+    
+      window.scrollTo(0, 0);
+  
   },[]);
 
   const sumbit=()=>
@@ -171,8 +176,8 @@ const Login = (props) => {
     
   })
   .catch(error => {
-    console.log(error);
-    setdis(error.response.data.error)
+    console.log(error.response);
+    setdis(error.response.data)
     setinfo(null)
      
     // if (error) {
@@ -242,21 +247,31 @@ const Login = (props) => {
     
    
   },[dp])
+  useEffect(() => {
+    const alertElement = document.getElementById("alert");
+  if (alertElement) {
+    const topOffset = alertElement.offsetTop;
+    const scrollOffset = topOffset - window.innerHeight / 2;
+    window.scrollTo({ top: scrollOffset, behavior: "smooth" })
+  }
+  }, [dis]);
   return (
-    <Container>
+    <Container >
       <Box sx={theme.mixins.toolbar} />
       
       <AppbarSpace></AppbarSpace>
-      <Stack sx={{ width: "100%" }} spacing={2}>
+      <Stack sx={{ width: "100%" }} id="top" spacing={2}>
     <Alert severity="info" >{Avalue.statusOfUser}</Alert>
   </Stack>
       {dis !== null ? (
-  <Stack sx={{ width: "100%" }} spacing={2}>
+  <Stack sx={{ width: "100%" }}  id="alert" spacing={2}>
+ 
     <Alert severity="error">{dis}</Alert>
+    
   </Stack>
 ) : info !== null ? (
   <Stack sx={{ width: "100%" }} spacing={2}>
-    <Alert severity="info" onClose={() => {setinfo(null)}}>{info}</Alert>
+    <Alert severity="info" id="info" onClose={() => {setinfo(null)}}>{info}</Alert>
   </Stack>
 ) : null}
       <Paper elevation={10} style={paperStyle}>
@@ -374,7 +389,7 @@ const Login = (props) => {
                 }}
               ></Type1Field>
               {/* <Grid item xs={12} sm={3}> */}
-              <Typography>DOB</Typography>
+              <Typography sx={{marginTop:"10px",fontWeight:"400",color:"rgba(0,0,0,0.6)"}}>DOB</Typography>
               <Datepicker
                 Name="dob"
                  value={Adate}

@@ -37,6 +37,8 @@ import { useTheme } from "@mui/material/styles";
 import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PaidIcon from '@mui/icons-material/Paid';
+import { Edit } from "@mui/icons-material";
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 
 const initial = {
   comment: "",
@@ -53,6 +55,7 @@ export default function (props) {
   const [bidInfo, setBidInfo] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [allBids,setAllBids]=useState([])
+  const [editFlag,setEditFlag]=useState(0);
 
   const [check, setcheck] = useState(0);
 
@@ -63,7 +66,7 @@ export default function (props) {
   const z = location.state.x.userId._id;
   const UserData = JSON.parse(localStorage.getItem("user Info"));
   const ID = UserData._id;
-  console.log(z);
+  console.log(location.state.x);
   console.log(location.state.x._id);
   const descriptionRef = useRef(null);
   // useEffect(() => {
@@ -77,6 +80,11 @@ export default function (props) {
   // }, [location.state.x.description]);
 
   useEffect(() => {
+    const localUserId=JSON.parse(localStorage.getItem("user Info"));
+    if(z==localUserId._id)
+    {
+      setEditFlag(1)
+    }
     api
       .get(`/comment/${y}`)
       .then(function (response) {
@@ -356,7 +364,7 @@ export default function (props) {
               y={
                 <ArrowForwardIcon
                   onClick={() => postComent(Tcoment.comment, y)}
-                  sx={{ color: "black" }}
+                  sx={{ color: "black",cursor:"pointer" }}
                 ></ArrowForwardIcon>
               }
             ></Type2Field>
@@ -383,8 +391,7 @@ export default function (props) {
                 </Typography>
                 {/* Fvrt */}
                 <Grid>
-               
-                  <Tooltip title="Feature Post">
+               {editFlag==1?<Grid><Tooltip title="Feature Post">
                          <IconButton sx={{color:"black"}} onClick={()=>navigate("/Feature",{ state: { ProductDetails: location.state.x }})}>
                          <PaidIcon/>
                        </IconButton>
@@ -399,15 +406,16 @@ export default function (props) {
                          <IconButton  sx={{color:"black"}}> 
                          <ModeIcon   onClick={()=>navigate("/Edit",{ state: { ProductDetails: location.state.x }})}/>
                        </IconButton>
-                         </Tooltip>
-               
-                {/* <IconButton sx={{alignContent:"end"}} disableRipple onClick={() => fav(y)}>
+                         </Tooltip></Grid>:  <IconButton sx={{alignContent:"end"}} disableRipple onClick={() => fav(y)}>
                   {check == 1 ? (
                     <FavoriteIcon sx={{ color: "#e81111" }} />
                   ) : (
                     <FavoriteBorderOutlinedIcon />
                   )}
-                </IconButton> */}
+                </IconButton>}
+                
+               
+              
                 </Grid>
                 
                
@@ -437,7 +445,9 @@ export default function (props) {
             
               {location.state.Mode != "used" ? (
               <Paper sx={{ p: 3, width: "100%" }}>
-                  <Typography variant="h6">Please Enter your Bid</Typography>
+                  <Typography variant="h6">
+                    {editFlag==1?"Bidding Details":"Please Enter your Bid"}
+                    </Typography>
                   <Box display="flex">
                     <Typography variant="body1" pr={1}>
                       Starting Bid:
@@ -492,6 +502,7 @@ export default function (props) {
                       pb={1}
                       sx={{fontWeight:"bold",marginLeft:"50px"}}
                     >
+                      
                      {"Bid:"}{p.bidingPrice}
                     </Typography>
                     <Divider />
@@ -499,6 +510,7 @@ export default function (props) {
                 ))}
               </AccordionDetails>
             </Accordion>
+            {editFlag==1?null:
                   <Type2Field
                     Label="Bid"
                     //  error={errors.password}
@@ -517,7 +529,7 @@ export default function (props) {
                         sx={{ color: "black" }}
                       />
                     }
-                  ></Type2Field>
+                  ></Type2Field>}
               </Paper>
               ) : null}
            
@@ -549,7 +561,13 @@ export default function (props) {
                     {location.state.x.userId.phoneNo}
                   </Typography>
                 </Stack>
-
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <LocationCityIcon />
+                  <Typography variant="body1">
+                    {location.state.x.userId.currentCity}
+                  </Typography>
+                </Stack>
+           
                 <Rating per="readOnly" data={rating} star={0.5} />
               </Stack>
             </Paper>

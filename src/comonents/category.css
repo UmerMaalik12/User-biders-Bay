@@ -16,9 +16,9 @@
 }
 
 .Headimage {
-  width: 100%;
-  height: 10em;
-  object-fit: fill;
+  width: 500px;
+  height: 9em;
+  object-fit:fill;
   border-radius: 50%;
 }
 .Headtitle {

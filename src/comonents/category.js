@@ -9,7 +9,7 @@ const Category = () => {
       <div className="head">
         <img
           className="Headimage"
-          src="https://images.pexels.com/photos/47344/dollar-currency-money-us-dollar-47344.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src="https://images.unsplash.com/photo-1487215078519-e21cc028cb29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         />
         <h2 className="Headtitle">Electronic</h2>
       </div>
@@ -17,7 +17,7 @@ const Category = () => {
       <div className="head">
         <img
           className="Headimage"
-          src="https://images.pexels.com/photos/47344/dollar-currency-money-us-dollar-47344.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src="https://plus.unsplash.com/premium_photo-1671439429636-6d8d66247143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2057&q=80"
         />
 
         <h2 className="Headtitle">Hardware</h2>
@@ -26,7 +26,7 @@ const Category = () => {
       <div className="head">
         <img
           className="Headimage"
-          src="https://images.pexels.com/photos/47344/dollar-currency-money-us-dollar-47344.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         />
 
         <h2 className="Headtitle">Furniture</h2>

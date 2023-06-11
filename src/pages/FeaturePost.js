@@ -6,13 +6,15 @@ import api from '../Config/Api'
 export default function FeaturePost() {
     const theme = useTheme();
     const navigate = useNavigate();
-    const paperStyle={padding:20,height:"500px",width:500,margin:"20px auto"}
+    const paperStyle={padding:20,height:"900px",width:500,margin:"20px auto"}
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const [email,setEmail] = useState(null);
     const [flag1,setFlag1] = useState("grid")
     const [flag2,setFlag2] = useState("none")
     const [flag3,setFlag3] = useState("none")
+    const [Temp1,setTemp1]=useState(null);
+    const [ScreenShot,setScreenShot] = useState(null)
     const [MaskedMail,setMaskedMail] = useState(" ");
     const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
     const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
@@ -109,6 +111,20 @@ export default function FeaturePost() {
       console.log("this is error");
     });
   }
+  const handleScreenShot=(e)=>
+  {
+    setScreenShot(e.target.files[0]);
+      const file = e.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+          setTemp1(reader.result);
+        };
+  }
+}
   return (
     <Grid>  <Box sx={theme.mixins.toolbar} />
      {dis != null ? (
@@ -131,7 +147,17 @@ Name: Bidders Bay<br></br>
 Bank: Bank HBL<br></br>
 Account Number: 0234XXXXXXXXXX
             </Typography>
-            
+            <Box component="image" elevation={100} border="2px solid black" sx={{marginBottom:"15px",boxShadow:"10"}} height={400}>
+            <img
+              style={{
+                alignSelf: "center",
+               
+                width: "200px",
+                height: "100%"
+              }}
+              src={Temp1}
+            />
+          </Box>
           
         <Button sx={{backgroundColor: "black", width:"100px",marginBottom:"60px",
 
@@ -140,7 +166,7 @@ Account Number: 0234XXXXXXXXXX
   color: "white",
 }}} variant="contained" component="label">
         Upload
-        <input  hidden accept="image/*" name='product_picture'  multiple type="file" />
+        <input  hidden accept="image/*" name='ScreenShot'  multiple type="file"  onChange={handleScreenShot}/>
       </Button>
       <Button
               variant="contained"
