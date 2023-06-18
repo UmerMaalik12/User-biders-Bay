@@ -80,12 +80,13 @@ const Login = (props) => {
     Avalue,
     AccountChange,
   } = Formcontrol(initial);
-  const[Adate,setAdate]=useState(new Date(Avalue.dob));
+  const[Adate,setAdate]=useState(null);//issue here
 
   useEffect(() => {
-
-    setAdate(new Date(Avalue.dob));
-  },[Avalue.dob]);
+    if (Avalue && Avalue.dob) {
+      setAdate(new Date(Avalue.dob));
+    }
+  }, [Avalue && Avalue.dob]);
   useEffect(() => {
 
 
@@ -261,7 +262,7 @@ const Login = (props) => {
       
       <AppbarSpace></AppbarSpace>
       <Stack sx={{ width: "100%" }} id="top" spacing={2}>
-    <Alert severity="info" >{Avalue.statusOfUser}</Alert>
+    <Alert severity="info" >{Avalue && Avalue.statusOfUser != null ? Avalue.statusOfUser : "Status Loading"}</Alert>
   </Stack>
       {dis !== null ? (
   <Stack sx={{ width: "100%" }}  id="alert" spacing={2}>
@@ -294,8 +295,8 @@ const Login = (props) => {
         </Box>
         
         <Grid align="center" style={{ paddingBottom: 35 }}>
-          <Avatar sx={{ height: 100, width: 100, fontSize: 50,marginBottom:3}} alt={Avalue.firstName}
-  src={Avalue.dp!=null?`${BASE_URL}${Avalue.dp}`:null}></Avatar>
+          <Avatar sx={{ height: 100, width: 100, fontSize: 50,marginBottom:3}} alt={Avalue && Avalue.firstName != null ?Avalue.firstName : "First Name  Loading"}
+  src={Avalue && Avalue.dp!=null?`${BASE_URL}${Avalue.dp}`:null}></Avatar>
   <Button sx={{backgroundColor: "black",
 
 "&:hover": {
@@ -320,7 +321,7 @@ const Login = (props) => {
                 x={<AbcIcon sx={{ color: "black" }} />}
                 Name="firstName"
                 sx={{ width: "100%" }}
-                Value={Avalue.firstName}
+                Value={Avalue && Avalue.firstName != null ?Avalue.firstName : "First Name  Loading"}
                 Change={AccountChange}
               ></Type1Field>
               <Type1Field
@@ -329,7 +330,7 @@ const Login = (props) => {
                 style={{ marginBottom: 10 }}
                 x={<MailIcon sx={{ color: "black" }} />}
                 Name="email"
-                Value={Avalue.email}
+                Value={Avalue && Avalue.email != null ?Avalue.email : "Email Loading"}
                 
               ></Type1Field>
               <FormControl>
@@ -338,7 +339,7 @@ const Login = (props) => {
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="gender"
-                  value={Avalue.gender}
+                  value={Avalue && Avalue.gender!= null ?Avalue.gender : "Gender Loading"}
                   onChange={AccountChange}
 
                   // onChange={}
@@ -362,7 +363,7 @@ const Login = (props) => {
                 style={{ marginBottom: 10 }}
                 x={<AbcIcon sx={{ color: "black" }} />}
                 Name="lastName"
-                Value={Avalue.lastName}
+                Value={Avalue && Avalue.lastName!= null ?Avalue.lastName : "Last Name Loading"}
                 Change={AccountChange}
               ></Type1Field>
               <Type1Field
@@ -372,7 +373,7 @@ const Login = (props) => {
                 x={<LocalPhoneIcon sx={{ color: "black" }} />}
                 type="number"
                 Name="phoneNo"
-                Value={Avalue.phoneNo}
+                Value={Avalue && Avalue.phoneNo!= null ?Avalue.phoneNo : "Phone Number Loading"}
                 Change={AccountChange}
 
                 as={{
@@ -405,7 +406,7 @@ const Login = (props) => {
               style={{ marginBottom: 10, marginTop: 10, width:"510px",marginLeft:-45 }}
               x={<HomeIcon sx={{ color: "black" }} />}
               Name="Address"
-              Value={Avalue.address}
+              Value={Avalue && Avalue.address!= null ?Avalue.address : "Address Loading"}
               Change={AccountChange}
             ></Type1Field>
           </Grid>

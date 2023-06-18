@@ -273,6 +273,7 @@ export default function (props) {
         <Grid container item direction="row" md={8} spacing={5}>
           <Grid item xs={12} md={12}>
             <Slider
+             style={{height:"500px"}}
               data={location.state.x}
               image={
                 location.state.x.images.length

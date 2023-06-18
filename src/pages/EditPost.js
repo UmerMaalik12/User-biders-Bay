@@ -10,8 +10,9 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTheme } from "@mui/material/styles";
 import api from '../Config/Api'
 import { useNavigate } from "react-router-dom";
-
+import Slider from "../comonents/slider/Slider";
 import { useLocation } from "react-router-dom";
+
 
 
 
@@ -48,7 +49,6 @@ const EditPost=()=>
   const theme = useTheme();
   const [dis, setdis] = useState(null);
   const navigate = useNavigate();
-  const x=74
   const PostDetails=location.state.ProductDetails
   console.log(PostDetails);
   const getSubcategory=(x)=>
@@ -172,6 +172,18 @@ const EditPost=()=>
               <Typography variant="h5" sx={{marginBottom:"10px"}}>Edit Post</Typography>
                 
                 <Grid container spacing={2}>
+                  <Grid sx={{padding:"10px",height:"350px",overflow:"hidden",width:"100%",marginTop:"20px"}}>
+                  <Slider
+                style={{height:"300px"}}
+               
+              data={PostDetails}
+              image={PostDetails.images.length
+                  ? PostDetails.images
+                  : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+              }
+            />
+                  </Grid>
+                
                 <Grid item xs={12} sm={6}>
                 <TextField
           id="outlined-select-currency"

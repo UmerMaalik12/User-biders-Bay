@@ -2,109 +2,35 @@ import React,{useEffect, useState} from 'react'
 import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert} from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import api from '../Config/Api'
 export default function FeaturePost() {
+  const location = useLocation();
     const theme = useTheme();
     const navigate = useNavigate();
     const paperStyle={padding:20,height:"900px",width:500,margin:"20px auto"}
-    const [showPassword1, setShowPassword1] = useState(false);
-    const [showPassword2, setShowPassword2] = useState(false);
-    const [email,setEmail] = useState(null);
-    const [flag1,setFlag1] = useState("grid")
-    const [flag2,setFlag2] = useState("none")
-    const [flag3,setFlag3] = useState("none")
     const [Temp1,setTemp1]=useState(null);
     const [ScreenShot,setScreenShot] = useState(null)
-    const [MaskedMail,setMaskedMail] = useState(" ");
-    const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
-    const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
-    const [otpValue, setOtpValue] = useState('');
     const [dis, setdis] = useState(null);
-    const [change,setChange]=useState({"oldPassword":"",
-  "newPassword":"",
-  "rePassword":""});
+    const ProductID=location.state.ProductDetails._id;
+   
 
 
-  const handleOtpChange = (otp) => {
-    setOtpValue(otp);
-  };
-    const handleInputChange = (e) => {
-        setEmail(e.target.value);
-      };
-      
-      function maskEmail(email) {
-        const atIndex = email.indexOf('@');
-        const username = email.substring(0, atIndex);
-        const domain = email.substring(atIndex + 1);
-        const maskedUsername = username.substring(0, 2) + '*'.repeat(username.length - 2);
-        const maskedEmail = maskedUsername + '@' + domain;
-        return maskedEmail;
-      }
-     const sumbit=(email)=>{
-        api
-        .post("/forget_password/send-otp/", {
-          email
-          
-        })
-        .then(function (response) {
-          console.log(response);
-          if(response)
-          {
-            setMaskedMail(maskEmail(email));
-            setFlag1("none")
-            setFlag2("grid")
-            setdis(null)
-
-          }
-        })
-        .catch(function (error) {
-            setdis(error.response.data.error);
-         
-        });
-        
-     }
-     const verify=(email,OTP)=>{
-        api
-        .post("/forget_password/verify-otp", {
-          email,OTP
-          
-        })
-        .then(function (response) {
-          console.log(response);
-          if(response)
-          {
-           
-            setFlag2("none")
-            setFlag3("grid")
-            setdis(null);
-          }
-        })
-        .catch(function (error) {
-            setdis(error.response.data.message);
-          console.log("this is error");
-        });
-    }
-    const handleChanges=(e)=>
-    {
-      const a=e.target.name
-      const b=e.target.value
-      console.log(a);
-      console.log(b);
-      setChange({
-        ...change,
-        [a]:b
-    });
-  }
-  const ChangePassword=(email,password,rePassword)=>
+  const FeatureProduct=(postId,payment_ss)=>
   {
+    console.log(ScreenShot);
+    
+    let formData=new FormData();
+    formData.append("postId",postId)
+    formData.append("payment_ss",payment_ss)
     api
-    .post("/forget_password/reset-password", {
-        email,password,rePassword
+    .post("/payment-featured/", 
+     formData
       
-    })
+    )
     .then(function (response) {
       console.log(response);
-      navigate("/login");
+      navigate("/bsprofile");
       
     })
     .catch(function (error) {
@@ -135,7 +61,7 @@ export default function FeaturePost() {
         <div>{null}</div>
       )}
     <Paper elevation={10} align="center" style={paperStyle}>
-        <Grid  align="center" display={flag1} sx={{width:"70%",display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <Grid  align="center" sx={{width:"70%",display:"flex",flexDirection:"column",alignItems:"center"}}>
             <Typography variant='h5'>
                 Feature Post
             </Typography>
@@ -170,7 +96,7 @@ Account Number: 0234XXXXXXXXXX
       </Button>
       <Button
               variant="contained"
-             onClick={()=>ChangePassword(email,change.newPassword,change.rePassword)}
+             onClick={()=>FeatureProduct(ProductID,ScreenShot)}
 
               style={{ marginBottom: 10, width: 200, marginTop: 10 }}
               sx={{
