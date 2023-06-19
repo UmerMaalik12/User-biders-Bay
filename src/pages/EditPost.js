@@ -29,17 +29,17 @@ const ProductType = [
     
   ];
 
-//   const initial = {
-//     category: "",
-//     subcategoryId: "",
-//     title: "",
-//     productType:"",
-//     productPrice: "",
-//     description: "",
-//     product_picture:[],
+  const initial = {
+    category: "",
+    subcategoryId: "",
+    title: "",
+    productType:"",
+    productPrice: "",
+    description: "",
+    product_picture:[],
    
 
-//   };
+  };
 
 const EditPost=()=>
 {
@@ -51,6 +51,7 @@ const EditPost=()=>
   const navigate = useNavigate();
   const PostDetails=location.state.ProductDetails
   console.log(PostDetails);
+  const [images,setimages]=useState(PostDetails.images);
   const getSubcategory=(x)=>
   {
     console.log("in start")
@@ -93,8 +94,17 @@ const EditPost=()=>
  
  
   },[]);
-
-  const NewPost=(title,product_picture,description,productPrice,subcategoryId,ProductType)=>
+useEffect(() => {
+// setimages(postValue. product_picture)
+console.log(postValue.product_picture);
+setimages(postValue.product_picture)
+},[postValue.product_picture])
+useEffect(() => {
+  // setimages(postValue. product_picture)
+  console.log("this is images",images);
+  
+  },[images])
+  const UpdatePost=(title,product_picture,description,productPrice,subcategoryId,ProductType)=>
   {
     const token = localStorage.getItem("user token");
     console.log(token)
@@ -121,7 +131,7 @@ const EditPost=()=>
   const config = { headers: {
     'Authorization':JSON.parse(token),
     'Content-Type': 'multipart/form-data' } };
-    api.post('/products/', 
+    api.post(`/products/${PostDetails._id}`, 
       
       formData,
     {
@@ -134,14 +144,14 @@ const EditPost=()=>
       console.log(response);
       if(response)
       {
-        if(postValue.productType=='Bidding Item')
-        {
-          navigate("/bid");
-        }
-        else
-        {
-          navigate("/used");
-        }
+        // if(postValue.productType=='Bidding Item')
+        // {
+        //   navigate("/bid");
+        // }
+        // else
+        // {
+        //   navigate("/used");
+        // }
       }
     })
     .catch(error => {
@@ -175,8 +185,9 @@ const EditPost=()=>
                   <Grid sx={{padding:"10px",height:"350px",overflow:"hidden",width:"100%",marginTop:"20px"}}>
                   <Slider
                 style={{height:"300px"}}
-               
+               ShowDelete={true}
               data={PostDetails}
+              // updateImages={postValue.product_picture}
               image={PostDetails.images.length
                   ? PostDetails.images
                   : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
@@ -302,7 +313,7 @@ const EditPost=()=>
         <Grid item xs={6} sx={{width:"100%"}}>
         <Button
           variant="contained"
-          onClick={()=>NewPost( postValue.title,postValue.product_picture,postValue.description,postValue.productPrice,postValue.subcategoryId,postValue.productType)}
+          // onClick={()=>NewPost( postValue.title,postValue.product_picture,postValue.description,postValue.productPrice,postValue.subcategoryId,postValue.productType)}
 
           style={{ marginBottom: 10 ,width:100,marginTop:40}}
           sx={{
@@ -320,7 +331,7 @@ const EditPost=()=>
           <Grid item xs={6} sm={6} sx={{width:"100%"}}>
           <Button
           variant="contained"
-          onClick={()=>NewPost( postValue.title,postValue.product_picture,postValue.description,postValue.productPrice,postValue.subcategoryId,postValue.productType)}
+          onClick={()=>UpdatePost( postValue.title,postValue.product_picture,postValue.description,postValue.productPrice,postValue.subcategoryId,postValue.productType)}
 
           style={{ marginBottom: 10 ,width:100,marginTop:40}}
           sx={{

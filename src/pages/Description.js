@@ -39,6 +39,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PaidIcon from '@mui/icons-material/Paid';
 import { Edit } from "@mui/icons-material";
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import { createBrowserHistory } from "history";
 
 const initial = {
   comment: "",
@@ -47,6 +48,7 @@ export default function (props) {
   const theme = useTheme();
 
   const location = useLocation();
+  const history = createBrowserHistory();
   const navigate = useNavigate();
   const [comments, setComents] = useState([]);
   const [dis, setdis] = useState(null);
@@ -257,6 +259,41 @@ export default function (props) {
       });
     SetBid("");
   };
+  const HandlePostDeletion=()=>
+  {
+    if(location.state.x.StatusOfActive==true)
+    {
+      api
+    .put(`/products/add_to_deleted/${location.state.x._id}`
+      
+    )
+    .then(function (response) {
+      console.log(response);
+      navigate(-1);
+      
+    })
+    .catch(function (error) {
+      console.log("this is error");
+      
+    });
+    }
+    else
+    {
+      api
+      .delete(`/products/${location.state.x._id}`
+        
+      )
+      .then(function (response) {
+        console.log(response);
+        navigate(-1);
+       
+        
+      })
+      .catch(function (error) {
+        console.log("this is error");
+      });
+    }
+  }
 
   return (
     <Container maxWidth="lg" sx={{ mb: 5 }}>
@@ -273,6 +310,7 @@ export default function (props) {
         <Grid container item direction="row" md={8} spacing={5}>
           <Grid item xs={12} md={12}>
             <Slider
+             ShowDelete={false}
              style={{height:"500px"}}
               data={location.state.x}
               image={
@@ -398,9 +436,9 @@ export default function (props) {
                        </IconButton>
                          </Tooltip>
                   
-                  <Tooltip title="Delete">
+                  <Tooltip title={location.state.x.StatusOfActive==true?"Add to Deleted Product":"Permanently Deleted Product"}>
                          <IconButton>
-                         <DeleteIcon sx={{color:"red"}}/>
+                         <DeleteIcon sx={{color:"red"}} onClick={HandlePostDeletion}/>
                        </IconButton>
                          </Tooltip>
                   <Tooltip title="Edit">

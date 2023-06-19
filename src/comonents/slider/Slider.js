@@ -128,7 +128,11 @@ console.log(props.data._id);
       console.log("this is error");
     });
 console.log("hello");
+
   }
+  // useEffect(()=>{
+  //   setslide(props.updateImages)
+  //   },[props.updateImages])
   return (
     <div className="max-w-[1400px] w-full m-auto py-0 px-0 relative group" style={props.style}>
       <img
@@ -143,9 +147,10 @@ console.log("hello");
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
+      {props.ShowDelete==true && slide!=="https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"?
       <div className="hidden group-hover:block absolute top-[10%] -translate-x-0 translate-y-[-50%] right-5 text-2xl  p-2  text-white cursor-pointer">
       <DeleteIcon onClick={()=>deleteImage(slide[currentIndex])} sx={{color:"red"}}/>
-      </div>
+      </div>:null}
       <div className="flex top-4 justify-center py-2">
         {Array.isArray(slide)&& slide.map((slide, slideIndex) => (
           <div

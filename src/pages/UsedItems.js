@@ -173,21 +173,23 @@ export default function UsedItems(props) {
           </Grid>
         ) : (
           Products.map((p, index) => {
+          
             return (
-              <Grid item xs={2} sm={4} md={3} key={index}>
-                <CardUpdate
-                  click={() => handleDetails(p, "used")}
-                  heartData={p._id}
-                  setWhishlist={props.setWhishlist}
-                  title={p.title}
-                  url={
-                    p.images.length
-                      ? `${BASE_URL}${p.images[0]}`
-                      : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
-                  }
-                  price={p.productPrice}
-                />
-              </Grid>
+              (p.StatusOfActive==true? <Grid item xs={2} sm={4} md={3} key={index}>
+              <CardUpdate
+                click={() => handleDetails(p, "used")}
+                heartData={p._id}
+                setWhishlist={props.setWhishlist}
+                title={p.title}
+                url={
+                  p.images.length
+                    ? `${BASE_URL}${p.images[0]}`
+                    : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                }
+                price={p.productPrice}
+              />
+            </Grid>:null)
+             
             );
           })
         )}

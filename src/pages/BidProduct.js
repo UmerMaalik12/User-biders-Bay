@@ -178,7 +178,8 @@ export default function BidProduct(props) {
           </Grid>
         ) : (
           Products.map((p, index) => (
-            <Grid item xs={2} sm={4} md={3} key={index}>
+            (
+              p.StatusOfActive==true ?  <Grid item xs={2} sm={4} md={3} key={index}>
               <CardUpdate
                 click={() => handleDetails(p, "bid")}
                 heartData={p._id}
@@ -191,7 +192,9 @@ export default function BidProduct(props) {
                 }
                 price={p.productPrice}
               />
-            </Grid>
+            </Grid>:null
+          )
+           
           ))
         )}
       </Grid>

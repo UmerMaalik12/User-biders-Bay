@@ -26,6 +26,7 @@ export default function () {
   const navigate = useNavigate();
   const [sellerproduct, setSellerProduct] = useState(null);
   const [rating, setRating] = React.useState(0);
+
   const [JoiDate, setDate] = useState("");
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
@@ -160,7 +161,41 @@ export default function () {
           <Grid container>
             {sellerproduct.map((p, index) => {
               return (
+                (p.StatusOfActive==true?
                 <Grid item xs={2} sm={4} md={4} key={index}>
+                  <CardUpdate
+                    click={() =>
+                      handleDetails(
+                        p,
+                        p.productType === "Bidding Item" ? "bid" : "used"
+
+                      )
+                    }
+                    title={p.title}
+                    url={
+                      p.images.length
+                        ? `${BASE_URL}${p.images[0]}`
+                        : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                    }
+                    price={p.productPrice}
+                  />
+                </Grid>:null)
+              );
+            })}
+          </Grid>
+        )}
+      </Container>
+      <Container sx={{py: 3}}> 
+        <Typography variant="h6" pl={2}>
+          Seller Deleted Post
+        </Typography>
+        {sellerproduct == null || sellerproduct.length == 0 ? (
+          <Empty />
+        ) : (
+          <Grid container>
+            {sellerproduct.map((p, index) => {
+              return (
+                (p.StatusOfActive==false?<Grid item xs={2} sm={4} md={4} key={index}>
                   <CardUpdate
                     click={() =>
                       handleDetails(
@@ -176,7 +211,8 @@ export default function () {
                     }
                     price={p.productPrice}
                   />
-                </Grid>
+                </Grid>:null)
+                
               );
             })}
           </Grid>
