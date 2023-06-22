@@ -40,6 +40,8 @@ import PaidIcon from '@mui/icons-material/Paid';
 import { Edit } from "@mui/icons-material";
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { createBrowserHistory } from "history";
+import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const initial = {
   comment: "",
@@ -71,6 +73,7 @@ export default function (props) {
   console.log(location.state.x);
   console.log(location.state.x._id);
   const descriptionRef = useRef(null);
+  const [CloseBIdFlag,setcloseBIdFlag] = useState(location.state.x.closeBid)
   // useEffect(() => {
   //   const descriptionHeight = descriptionRef.current.clientHeight;
   //   const paperHeight = 200;
@@ -294,7 +297,45 @@ export default function (props) {
       });
     }
   }
-
+const PauseBid=()=>{
+  api
+      .put(`/bidding/close_bidding/${location.state.x._id}`
+        
+      )
+      .then(function (response) {
+        console.log(response);
+        if(response)
+        {
+          setcloseBIdFlag(true)
+        }
+       
+       
+        
+      })
+      .catch(function (error) {
+        console.log("this is error");
+      });
+}
+const ResumeBid=()=>
+{
+  api
+  .put(`/bidding/resume_bidding/${location.state.x._id}`
+    
+  )
+  .then(function (response) {
+    console.log(response);
+    if(response)
+    {
+      setcloseBIdFlag(false)
+    }
+   
+   
+    
+  })
+  .catch(function (error) {
+    console.log("this is error");
+  });
+}
   return (
     <Container maxWidth="lg" sx={{ mb: 5 }}>
       <Box sx={theme.mixins.toolbar} />
@@ -441,6 +482,12 @@ export default function (props) {
                          <DeleteIcon sx={{color:"red"}} onClick={HandlePostDeletion}/>
                        </IconButton>
                          </Tooltip>
+                         {location.state.x.productType=='Bidding Item'?<Tooltip title={CloseBIdFlag==false?"Pause Bid":"Resume Bid"}>
+                        <IconButton  sx={{color:"black"}}>
+                        {CloseBIdFlag==false? <PauseIcon onClick={PauseBid}/>:<PlayArrowIcon onClick={ResumeBid}/>}
+                       </IconButton>
+                         </Tooltip>:null}
+                       
                   <Tooltip title="Edit">
                          <IconButton  sx={{color:"black"}}> 
                          <ModeIcon   onClick={()=>navigate("/Edit",{ state: { ProductDetails: location.state.x }})}/>
@@ -504,6 +551,7 @@ export default function (props) {
                     </Typography>
                     
                   </Box>
+                  {editFlag==1?
                   <Accordion
               expanded={expanded === "panel2"}
               onChange={handleExpand("panel2")}
@@ -548,7 +596,7 @@ export default function (props) {
                   </Box>
                 ))}
               </AccordionDetails>
-            </Accordion>
+            </Accordion>:null}
             {editFlag==1?null:
                   <Type2Field
                     Label="Bid"
