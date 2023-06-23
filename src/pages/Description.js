@@ -74,6 +74,7 @@ export default function (props) {
   console.log(location.state.x._id);
   const descriptionRef = useRef(null);
   const [CloseBIdFlag,setcloseBIdFlag] = useState(location.state.x.closeBid)
+  const [HideBidFlag,setHideBidFlag] = useState(true)
   // useEffect(() => {
   //   const descriptionHeight = descriptionRef.current.clientHeight;
   //   const paperHeight = 200;
@@ -90,6 +91,8 @@ export default function (props) {
     {
       setEditFlag(1)
     }
+
+  
     api
       .get(`/comment/${y}`)
       .then(function (response) {
@@ -148,9 +151,20 @@ export default function (props) {
       .catch(function (error) {
         console.log("this is error");
       });
-    
-   
+      console.log("close bid",CloseBIdFlag);
+      console.log("edit flag",editFlag);
+      
+      console.log("hide walue",HideBidFlag);
   }, []);
+  useEffect(()=>{
+    console.log("the value of edit flag ",editFlag);
+    setHideBidFlag(true)
+    if(editFlag==0 && CloseBIdFlag==true)
+      {
+        console.log("check is working");
+        setHideBidFlag(false)
+      }
+  },[editFlag])
   useEffect(() => {
     api
     .get(`/rating/${z}`)
@@ -530,7 +544,10 @@ const ResumeBid=()=>
 
             
               {location.state.Mode != "used" ? (
-              <Paper sx={{ p: 3, width: "100%" }}>
+                
+            
+             HideBidFlag==true?(<Paper sx={{ p: 3, width: "100%" }}>
+                
                   <Typography variant="h6">
                     {editFlag==1?"Bidding Details":"Please Enter your Bid"}
                     </Typography>
@@ -617,7 +634,8 @@ const ResumeBid=()=>
                       />
                     }
                   ></Type2Field>}
-              </Paper>
+                  
+              </Paper>):<Paper sx={{ p: 3, width: "100%" }}><Typography sx={{color:"red"}}>The Seller Has Paused The Bidding</Typography></Paper>
               ) : null}
            
 
