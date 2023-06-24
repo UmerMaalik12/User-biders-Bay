@@ -25,7 +25,8 @@ export default function () {
   const [userData, setuserData] = useState(" ");
   const navigate = useNavigate();
   const [sellerproduct, setSellerProduct] = useState(null);
-  const [rating, setRating] = React.useState(0);
+  const [rating, setRating] = useState(0);
+  const [editFlag,setEditFlag]=useState(0);
 
   const [JoiDate, setDate] = useState("");
   const handleRatingChange = (event, newValue) => {
@@ -38,12 +39,13 @@ export default function () {
   };
   useEffect(() => {
     if (location.state.Data == null) {
-      console.log(location.state.Info);
+      console.log("wow scenes",location.state.Info);
       setuserData(location.state.Info);
     } else {
       console.log("if else ", location.state.Data.userId);
       setuserData(location.state.Data.userId);
     }
+    
   }, []);
   useEffect(() => {
     console.log("user data from paper", userData);
@@ -64,7 +66,10 @@ export default function () {
     console.log("date", convertedDate);
   }, [userData]);
   useEffect(() => {
+    if(rating!==null)
+    {
     updaterating(userData._id, rating);
+    }
   }, [rating]);
   const updaterating = (sellerId, rating) => {
     console.log(rating);
@@ -98,6 +103,27 @@ export default function () {
   const handleDetails = (data, mode) => {
     navigate("/Details", { state: { x: data, Mode: mode } });
   };
+  useEffect(()=>{
+if(userData!==" " && userData!==undefined)
+{
+  const localUserId=JSON.parse(localStorage.getItem("user Info"));
+    console.log("just above",userData);
+    if(userData._id===localUserId._id)
+    {
+      console.log("it the seller");
+      setEditFlag(1)
+      api
+      .get(`/rating/${userData._id}`)
+      .then(function (response) {
+        console.log("what is", response.data.data[0].avgRating);
+        setRating(response.data.data[0].avgRating);
+      })
+      .catch(function (error) {
+        console.log("this is error rating");
+      });
+    }
+}
+  },[userData])
   return (
     <Container>
       <Box sx={theme.mixins.toolbar} />
@@ -140,7 +166,7 @@ export default function () {
               </Typography>
 
               <Rating
-                per=""
+             per={editFlag==1?"readOnly":(rating==null?"readOnly":"")}
                 data={rating}
                 star={1}
                 change={handleRatingChange}
@@ -161,7 +187,7 @@ export default function () {
           <Grid container>
             {sellerproduct.map((p, index) => {
               return (
-                (p.StatusOfActive==true?
+                
                 <Grid item xs={2} sm={4} md={4} key={index}>
                   <CardUpdate
                     click={() =>
@@ -178,14 +204,16 @@ export default function () {
                         : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
                     }
                     price={p.productPrice}
+                    MypostCheck={1}
+                    status={p.StatusOfActive}
                   />
-                </Grid>:null)
+                </Grid>
               );
             })}
           </Grid>
         )}
       </Container>
-      <Container sx={{py: 3}}> 
+      {/* <Container sx={{py: 3}}> 
         <Typography variant="h6" pl={2}>
           Seller Deleted Post
         </Typography>
@@ -217,7 +245,7 @@ export default function () {
             })}
           </Grid>
         )}
-      </Container>
+      </Container> */}
     </Container>
   );
 }

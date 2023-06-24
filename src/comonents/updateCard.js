@@ -17,7 +17,9 @@ export default function ActionAreaCard({
   heartData,
   per,
   date,
-  name
+  name,
+  status,
+  MypostCheck
 }) {
   const MAX_TITLE_LENGTH = 17;
 
@@ -147,7 +149,11 @@ export default function ActionAreaCard({
         </Typography>
         <Typography >
           {name=="bid"?<Coundown time={date}></Coundown>:null}
-        </Typography>
+        </Typography >
+        {MypostCheck==1?
+        <Typography sx={{marginTop:"10px"}}>
+          Status:{status==true?<Typography sx={{color:"#72a4d4",display:"inline"}}>Active</Typography>:<Typography sx={{color:"red",display:"inline"}}>Not Active</Typography>}
+        </Typography>:null}
       </CardContent>
       {/* </CardActionArea> */}
     </Card>
