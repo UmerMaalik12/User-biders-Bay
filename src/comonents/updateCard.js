@@ -8,6 +8,7 @@ import api from "../Config/Api";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Coundown from '../comonents/Coundown'
+import VerifiedIcon from '@mui/icons-material/Verified';
 export default function ActionAreaCard({
   url,
   title,
@@ -19,13 +20,15 @@ export default function ActionAreaCard({
   date,
   name,
   status,
-  MypostCheck
+  MypostCheck,
+  extraProp
+
 }) {
   const MAX_TITLE_LENGTH = 17;
 
   const [check, setcheck] = useState(0);
   const truncatedTitle =
-    title.length > MAX_TITLE_LENGTH
+   title && title.length > MAX_TITLE_LENGTH
       ? `${title.substring(0, MAX_TITLE_LENGTH)}...`
       : title;
   const y = heartData;
@@ -58,6 +61,9 @@ export default function ActionAreaCard({
       console.log(error);
     });
   },[])
+  useEffect(()=>{
+    console.log("this is extra props",extraProp);
+  },[extraProp])
   const fav = (postId) => {
     api
       .post("/favorite/", {
@@ -113,7 +119,8 @@ export default function ActionAreaCard({
       src={url}
       style={{objectFit:"fill"}}
       /> */}
-
+ 
+  <div style={{ position: 'relative' }}> 
       <img
         onClick={click}
         style={{
@@ -128,8 +135,39 @@ export default function ActionAreaCard({
           currentTarget.src =
             "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image";
         }}
+        
       ></img>
-
+       {name=="bid"?
+      <Card style={{
+      position: 'absolute',
+      top: '7px',
+      left:"7px",
+      backgroundColor: 'white',
+      boxShadow: "5px 4px 8px 0px rgba(0, 0, 0, 0.2)",
+      padding: '4px',
+     
+    }}>
+      <Typography >
+          {name=="bid"?<Coundown time={date}></Coundown>:null}
+        </Typography >
+      </Card>:null}
+      
+     {extraProp==true?
+     <Card style={{
+      position: 'absolute',
+      top: '7px',
+      right:"7px",
+      backgroundColor: 'black',
+      boxShadow: "5px 4px 8px 0px rgba(0, 0, 0, 0.2)",
+      padding: '4px',
+     
+    }}>
+      <Typography sx={{color:"white"}} >
+         Featured
+        </Typography >
+      </Card>:null}
+      
+</div>
       <CardContent>
         <Box display='flex' justifyContent='space-between'>
           <Typography gutterBottom variant="h5" component="div">
@@ -147,9 +185,7 @@ export default function ActionAreaCard({
         <Typography variant="body2" color="text.secondary">
           {"RS."}{price}
         </Typography>
-        <Typography >
-          {name=="bid"?<Coundown time={date}></Coundown>:null}
-        </Typography >
+       
         {MypostCheck==1?
         <Typography sx={{marginTop:"10px"}}>
           Status:{status==true?<Typography sx={{color:"#72a4d4",display:"inline"}}>Active</Typography>:<Typography sx={{color:"red",display:"inline"}}>Not Active</Typography>}

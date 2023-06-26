@@ -171,7 +171,7 @@ export default function BidProduct(props) {
         </Stack>
       </Box>
 
-      <Grid container>
+      {/* <Grid container>
         {Products == null || Products.length == 0 ? (
           <Grid item sm={12}>
             <Empty />
@@ -180,6 +180,10 @@ export default function BidProduct(props) {
           Products.map((p, index) => (
             (
               p.StatusOfActive==true ?  <Grid item xs={2} sm={4} md={3} key={index}>
+               {props.Feature!==null? props.Feature.map((z)=>{
+                prop
+
+               }):
               <CardUpdate
                 click={() => handleDetails(p, "bid")}
                 heartData={p._id}
@@ -191,11 +195,65 @@ export default function BidProduct(props) {
                     : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
                 }
                 price={p.productPrice}
-              />
+              />}
             </Grid>:null
           )
            
           ))
+        )}
+      </Grid>
+    </Container> */}
+    <Grid container>
+        {Products == null || Products.length === 0 ? (
+          <Grid item sm={12}>
+            <Empty />
+          </Grid>
+        ) : (
+          Products.map((p, index) => {
+            const isFeatured =
+    props.Feature !== null &&
+    Array.isArray(props.Feature) &&
+    props.Feature.some(feature => feature.postId._id === p._id);
+            
+            return (
+              p.StatusOfActive && (
+                <Grid item xs={2} sm={4} md={3} key={index}>
+                  {isFeatured ? (
+                    <CardUpdate
+                      click={() => handleDetails(p, "bid")}
+                      heartData={p._id}
+                      setWhishlist={props.setWhishlist}
+                      title={p.title}
+                      date={p.createdAt}
+                        name="bid"
+                      url={
+                        p.images.length
+                          ? `${BASE_URL}${p.images[0]}`
+                          : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                      }
+                      price={p.productPrice}
+                      extraProp={true}
+                    />
+                  ) : (
+                    <CardUpdate
+                      click={() => handleDetails(p, "bid")}
+                      heartData={p._id}
+                      setWhishlist={props.setWhishlist}
+                      title={p.title}
+                      date={p.createdAt}
+                        name="bid"
+                      url={
+                        p.images.length
+                          ? `${BASE_URL}${p.images[0]}`
+                          : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                      }
+                      price={p.productPrice}
+                    />
+                  )}
+                </Grid>
+              )
+            );
+          })
         )}
       </Grid>
     </Container>

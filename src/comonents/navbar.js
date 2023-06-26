@@ -58,32 +58,32 @@ const Navbar = (props) => {
 
   const navigate = useNavigate();
 
-  const check = () => {
-    console.log(localStorage.getItem("user Info"));
-    if (localStorage.getItem("user Info") == "null") {
-      navigate("/login");
-    } else {
-      navigate("/account");
-    }
-  };
-  const check1 = () => {
-    console.log(localStorage.getItem("user Info"));
-    if (localStorage.getItem("user Info") == "null") {
-      navigate("/login");
-    } else if (x.role == "seller") {
-      navigate("/post");
-    } else {
-      navigate("/account");
-    }
-  };
-  const check2 = () => {
-    console.log(localStorage.getItem("user Info"));
-    if (localStorage.getItem("user Info") == "null") {
-      navigate("/login");
-    } else {
-      navigate("/favourite");
-    }
-  };
+  // const check = () => {
+  //   console.log(localStorage.getItem("user Info"));
+  //   if (localStorage.getItem("user Info") == "null") {
+  //     navigate("/login");
+  //   } else {
+  //     navigate("/account");
+  //   }
+  // };
+  // const check1 = () => {
+  //   console.log(localStorage.getItem("user Info"));
+  //   if (localStorage.getItem("user Info") == "null") {
+  //     navigate("/login");
+  //   } else if (x.role == "seller") {
+  //     navigate("/post");
+  //   } else {
+  //     navigate("/account");
+  //   }
+  // };
+  // const check2 = () => {
+  //   console.log(localStorage.getItem("user Info"));
+  //   if (localStorage.getItem("user Info") == "null") {
+  //     navigate("/login");
+  //   } else {
+  //     navigate("/favourite");
+  //   }
+  // };
 
   const [cat, setCat] = useState(props.cat);
 
@@ -124,7 +124,7 @@ const Navbar = (props) => {
           label="Used Items"
           sx={{ color: "black" }}
         />
-        <Tab onClick={check1} label="Sell" sx={{ color: "black" }} />
+        <Tab onClick={()=>navigate("/post")} label="Sell" sx={{ color: "black" }} />
       </Tabs>
     );
   };
@@ -175,7 +175,7 @@ const Navbar = (props) => {
             >
               <ListItemText primary="Used Items" />
             </ListItem>
-            <ListItem onClick={check1}>
+            <ListItem onClick={()=>navigate("/post")}>
               <ListItemText primary="Sell" />
             </ListItem>
           </List>
@@ -263,10 +263,10 @@ const Navbar = (props) => {
 
             <Box > 
               <Badge color="primary" badgeContent={props.wishlist?.length}>
-                <FavoriteIcon onClick={check2} color="primary" />
+                <FavoriteIcon onClick={()=>navigate("/favourite")} color="primary" />
               </Badge>
               <AccountCircleIcon
-                onClick={check}
+                onClick={() => navigate("/account")}
                 sx={{ marginLeft: "30px", mr: 3 }}
                 color="primary"
               />

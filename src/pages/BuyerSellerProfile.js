@@ -18,7 +18,7 @@ import CardUpdate from "../comonents/updateCard";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
-export default function () {
+export default function (props) {
   const location = useLocation();
   const theme = useTheme();
 
@@ -186,29 +186,78 @@ if(userData!==" " && userData!==undefined)
         ) : (
           <Grid container>
             {sellerproduct.map((p, index) => {
-              return (
+              // return (
                 
-                <Grid item xs={2} sm={4} md={4} key={index}>
-                  <CardUpdate
-                    click={() =>
-                      handleDetails(
-                        p,
-                        p.productType === "Bidding Item" ? "bid" : "used"
+              //   <Grid item xs={2} sm={4} md={4} key={index}>
+              //     <CardUpdate
+              //       click={() =>
+              //         handleDetails(
+              //           p,
+              //           p.productType === "Bidding Item" ? "bid" : "used"
 
-                      )
-                    }
-                    title={p.title}
-                    url={
-                      p.images.length
-                        ? `${BASE_URL}${p.images[0]}`
-                        : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
-                    }
-                    price={p.productPrice}
-                    MypostCheck={1}
+              //         )
+              //       }
+              //       title={p.title}
+              //       name={p.productType==="Bidding Item"?"bid":"used"}
+              //       date={p.createdAt}
+              //       url={
+              //         p.images.length
+              //           ? `${BASE_URL}${p.images[0]}`
+              //           : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+              //       }
+              //       price={p.productPrice}
+              //       MypostCheck={editFlag==1?1:0}
+              //       status={p.StatusOfActive}
+              //     />
+              //   </Grid>
+              // );
+              const isFeatured =
+              props.Feature !== null &&
+              Array.isArray(props.Feature) &&
+              props.Feature.some(feature => feature.postId._id === p._id);
+                      
+                      return (
+                        p.StatusOfActive && (
+                          <Grid item xs={2} sm={4} md={4} key={index}>
+                            {isFeatured ? (
+                              <CardUpdate
+                                click={() => handleDetails(p, "bid")}
+                                heartData={p._id}
+                                setWhishlist={props.setWhishlist}
+                                title={p.title}
+                                name={p.productType==="Bidding Item"?"bid":"used"}
+                                      date={p.createdAt}
+                                url={
+                                  p.images.length
+                                    ? `${BASE_URL}${p.images[0]}`
+                                    : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                                }
+                                price={p.productPrice}
+                                extraProp={true}
+                                MypostCheck={editFlag==1?1:0}
                     status={p.StatusOfActive}
-                  />
-                </Grid>
-              );
+                              />
+                            ) : (
+                              <CardUpdate
+                                click={() => handleDetails(p, "bid")}
+                                heartData={p._id}
+                                setWhishlist={props.setWhishlist}
+                                title={p.title}
+                                name={p.productType==="Bidding Item"?"bid":"used"}
+                                      date={p.createdAt}
+                                url={
+                                  p.images.length
+                                    ? `${BASE_URL}${p.images[0]}`
+                                    : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                                }
+                                price={p.productPrice}
+                                MypostCheck={editFlag==1?1:0}
+                    status={p.StatusOfActive}
+                              />
+                            )}
+                          </Grid>
+                        )
+                      );
             })}
           </Grid>
         )}

@@ -166,7 +166,7 @@ export default function UsedItems(props) {
         </Stack>
       </Box>
 
-      <Grid container>
+      {/* <Grid container>
         {Products == null || Products.length == 0 ? (
           <Grid item sm={12}>
            <Empty/>
@@ -190,6 +190,57 @@ export default function UsedItems(props) {
               />
             </Grid>:null)
              
+            );
+          })
+        )}
+      </Grid> */}
+       <Grid container>
+        {Products == null || Products.length === 0 ? (
+          <Grid item sm={12}>
+            <Empty />
+          </Grid>
+        ) : (
+          Products.map((p, index) => {
+            const isFeatured =
+    props.Feature !== null &&
+    Array.isArray(props.Feature) &&
+    props.Feature.some(feature => feature.postId._id === p._id);
+            
+            return (
+              p.StatusOfActive && (
+                <Grid item xs={2} sm={4} md={3} key={index}>
+                  {isFeatured ? (
+                    <CardUpdate
+                    click={() => handleDetails(p, "used")}
+                      heartData={p._id}
+                      setWhishlist={props.setWhishlist}
+                      title={p.title}
+                    
+                      url={
+                        p.images.length
+                          ? `${BASE_URL}${p.images[0]}`
+                          : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                      }
+                      price={p.productPrice}
+                      extraProp={true}
+                    />
+                  ) : (
+                    <CardUpdate
+                    click={() => handleDetails(p, "used")}
+                      heartData={p._id}
+                      setWhishlist={props.setWhishlist}
+                      title={p.title}
+                      
+                      url={
+                        p.images.length
+                          ? `${BASE_URL}${p.images[0]}`
+                          : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                      }
+                      price={p.productPrice}
+                    />
+                  )}
+                </Grid>
+              )
             );
           })
         )}

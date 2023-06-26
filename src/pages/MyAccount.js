@@ -281,8 +281,8 @@ const Login = (props) => {
         <Box component="div" sx={{display: "flex", justifyContent: 'flex-end' }}>
         <LogoutIcon
           onClick={() => {
-            localStorage.setItem("user Info", null);
-            localStorage.setItem("user token",null);
+            localStorage.removeItem("user Info");
+            localStorage.removeItem("user token");
             props.setToken("ok")
             props.setWhishlist([])
             

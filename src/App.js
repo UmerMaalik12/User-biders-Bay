@@ -15,7 +15,7 @@ import Search from "./pages/Search";
 import api from "../src/Config/Api";
 import Navbar from "./comonents/navbar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Footer from "./comonents/Footer";
 import Otp from "./pages/Otp";
 import EditPost from "./pages/EditPost";
@@ -42,6 +42,7 @@ const theme = createTheme({
 function App() {
   const [wishlist, setWhishlist] = useState([]);
   const [token, setToken] = useState(" ");
+  const [Feature,SetFeature]=useState(null)
 
   useEffect(() => {
     console.log("start use");
@@ -65,10 +66,11 @@ function App() {
     if(token!=="ok")
     {
       api
-      .get("/favorite/")
+      .get("/payment-featured/featured_post/")
       .then((response) => {
-        console.log(response.data.FavoritePosts);
-        setWhishlist(response.data.FavoritePosts);
+        console.log("this is feature",response.data.data);
+      SetFeature(response.data.data)
+        
       })
       .catch((error) => {
         console.log(error);
@@ -76,42 +78,71 @@ function App() {
     }
   
   }, [token]);
+  useEffect(()=>{
+    api
+    .get("/favorite/")
+    .then((response) => {
+      console.log("this is app res",response.data.FavoritePosts);
+      setWhishlist(response.data.FavoritePosts);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },[])
+  const PrivateRoute = ({role, children }) => {
+    let user = JSON.parse(localStorage.getItem("user Info")); 
+    console.log("aa->",user);
+    if(user){
+      if(!role.includes(user.role)){
+        return  <Navigate to="/account" />;
+      }
+      return children;
+    }
+    return  <Navigate to="/login" />;
+  };
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         {/* <Header/> */}
         <Navbar wishlist={wishlist}/>
         <Routes>
-          <Route path="login" element={<Login setToken={setToken}/>} />
-          <Route path="signup" element={<SignUP />} />
-          <Route path="post" element={<Post />} />
-          <Route path="/" element={<Home setWhishlist={setWhishlist} />} />
-          <Route path="account" element={<Account setWhishlist={setWhishlist} setToken={setToken}/>} />
-          <Route path="bid" element={<BidPage setWhishlist={setWhishlist} />} />
+          <Route exact path="login" element={<Login setToken={setToken}/>} />
+          <Route exact path="signup" element={<SignUP />} />
+         
+          <Route exact path="/" element={<Home setWhishlist={setWhishlist} Feature={Feature}/>} />
+          <Route exact path="bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />
           <Route
-            path="Used"
-            element={<UsedItem setWhishlist={setWhishlist} />}
+            exact path="Used"
+            element={<UsedItem setWhishlist={setWhishlist} Feature={Feature} />}
           />
           <Route
-            path="Details"
+            exact path="Details"
             element={<Description setWhishlist={setWhishlist} />}
           />
+          
+          <Route exact path="bsprofile" element={<BuyerSellerProfile Feature={Feature}/>} />
+          
+          <Route exact path="Search" element={<Search />} />
+          
+          <Route exact path="ForgotPassword" element={<Otp />} />
+      
+          <Route exact path="account" element={<PrivateRoute role={["seller","buyer"]}><Account setWhishlist={setWhishlist} setToken={setToken}/></PrivateRoute>} />
+          <Route exact path="post" element={<PrivateRoute role={["seller"]}><Post /></PrivateRoute>} />
           <Route
-            path="favourite"
+            exact path="favourite"
             element={
-              <Favourite wishlist={wishlist} setWhishlist={setWhishlist} />
+              <PrivateRoute role={["seller","buyer"]}><Favourite wishlist={wishlist} setWhishlist={setWhishlist} Feature={Feature}/></PrivateRoute>
+              
             }
           />
-          <Route path="bsprofile" element={<BuyerSellerProfile />} />
-          <Route path="bseller" element={<BecomeSeller />} />
-          <Route path="Search" element={<Search />} />
-          <Route path="ForgotPassword" element={<Otp />} />
-          <Route path="Edit" element={<EditPost />} />
-          <Route path="Feature" element={<FeaturePost />} />
-       
-
+          <Route exact path="bseller" element={<PrivateRoute role={["seller","buyer"]}><BecomeSeller /></PrivateRoute>} />
+          
+          <Route exact path="Edit" element={<PrivateRoute role={["seller","buyer"]}> <EditPost /></PrivateRoute>} />
+          <Route exact path="Feature" element={<PrivateRoute role={["seller","buyer"]}><FeaturePost /></PrivateRoute>} />
           {/* <Route path="/create" element={<Create />} /> */}
         </Routes>
+        
+          
         <Footer/>
       </BrowserRouter>
     </ThemeProvider>

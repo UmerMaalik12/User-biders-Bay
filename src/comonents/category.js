@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import "react-multi-carousel/lib/styles.css";
 import "./category.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Category = () => {
+  const navigate = useNavigate();
+  const [Electronic,SetElectroninc]=useState({"title":"Computer & Accessories","_id":"64627c88c216b43f4e35587b"})
+  const [Hardware,sethardeare]=useState({"title":"TV - Video - Audio","_id":"64627c6bc216b43f4e355877"})
+  const [Furnitrue,setFurniture]=useState({"title":"Home Decoration","_id":"64627e1ec216b43f4e3558e3"})
   return (
     <div className="bigDiv">
 
       <div className="head">
         <img
+         onClick={()=>{navigate("/Search",{state:{Dbycat:Hardware}})}}
           className="Headimage"
+          style={{cursor:"pointer"}}
           src="https://images.unsplash.com/photo-1487215078519-e21cc028cb29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         />
         <h2 className="Headtitle">Electronic</h2>
@@ -16,6 +23,8 @@ const Category = () => {
 
       <div className="head">
         <img
+        onClick={()=>{navigate("/Search",{state:{Dbycat:Electronic}})}}
+        style={{cursor:"pointer"}}
           className="Headimage"
           src="https://plus.unsplash.com/premium_photo-1671439429636-6d8d66247143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2057&q=80"
         />
@@ -25,6 +34,8 @@ const Category = () => {
 
       <div className="head">
         <img
+        onClick={()=>{navigate("/Search",{state:{Dbycat:Furnitrue}})}}
+        style={{cursor:"pointer"}}
           className="Headimage"
           src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         />

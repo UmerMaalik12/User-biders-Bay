@@ -86,7 +86,9 @@ export default function Favorite(props) {
     setProducts(dummy);
     setFilterValue(initial);
   };
-
+useEffect(() => {
+  console.log("this is the avalue of products",Products);
+},[Products])
   return (
     // <Grid sx={{ backgroundColor: "white" }}>
     //   <AppbarSpace></AppbarSpace>
@@ -191,23 +193,70 @@ export default function Favorite(props) {
        </Grid>
         ) : (
           Products.map((p, index) => {
-            return (
-              <Grid item xs={2} sm={4} md={3} key={index}>
-                <CardUpdate
-                  click={() => handleDetails(p.postId)}
-                  heartData={p.postId._id}
-                  per="fav"
-                   setWhishlist={props.setWhishlist}
-                  title={p.postId.title}
-                  url={
-                    p.postId.images.length
-                      ? `${BASE_URL}${p.postId.images[0]}`
-                      : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
-                  }
-                  price={p.postId.productPrice}
-                ></CardUpdate>
-              </Grid>
-            );
+            // return (
+            //   <Grid item xs={2} sm={4} md={3} key={index}>
+            //     <CardUpdate
+            //       click={() => handleDetails(p.postId)}
+            //       heartData={p.postId && p.postId._id}
+            //       per="fav"
+            //        setWhishlist={props.setWhishlist}
+            //       title={p.postId && p.postId.title}
+            //       url={
+            //         p.postId && p.postId.images.length
+            //           ? `${BASE_URL}${p.postId.images[0]}`
+            //           : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+            //       }
+            //       price={p.postId && p.postId.productPrice}
+            //     ></CardUpdate>
+            //   </Grid>
+            // );
+            const isFeatured =
+            props.Feature !== null &&
+            Array.isArray(props.Feature) &&
+            props.Feature.some(feature => feature.postId._id === p.postId._id);
+                    
+                    return (
+                   
+                        <Grid item xs={2} sm={4} md={3} key={index}>
+                          {isFeatured ? (
+                            <CardUpdate
+                            click={() => handleDetails(p.postId)}
+                                  heartData={p.postId && p.postId._id}
+                                  per="fav"
+                                   setWhishlist={props.setWhishlist}
+                                  title={p.postId && p.postId.title}
+                                  url={
+                                    p.postId && p.postId.images.length
+                                      ? `${BASE_URL}${p.postId.images[0]}`
+                                      : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                                  }
+                                  price={p.postId && p.postId.productPrice}
+                              name={p.postId.productType==="Bidding Item"?"bid":"used"}
+                                    date={p.postId.createdAt}
+                                extraProp={true}
+                            
+                 
+                            />
+                          ) : (
+                            <CardUpdate
+                            click={() => handleDetails(p.postId)}
+                            heartData={p.postId && p.postId._id}
+                            per="fav"
+                             setWhishlist={props.setWhishlist}
+                            title={p.postId && p.postId.title}
+                            url={
+                              p.postId && p.postId.images.length
+                                ? `${BASE_URL}${p.postId.images[0]}`
+                                : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
+                            }
+                            price={p.postId && p.postId.productPrice}
+                        name={p.postId.productType==="Bidding Item"?"bid":"used"}
+                              date={p.postId.createdAt}
+                            />
+                          )}
+                        </Grid>
+                      
+                    );
           })
         )}
       </Grid>

@@ -5,6 +5,9 @@ export default function (props) {
   const [days, setDays] = useState(-1);
 
   useEffect(() => {
+    console.log("valie of time",props.time);
+    if(props.time!==null)
+    {
     const newDate = new Date(props.time);
     const x = dataChanger(newDate);
     const y = addDays(x, 7);
@@ -20,6 +23,7 @@ export default function (props) {
     } else {
       setDays(z);
     }
+  }
   }, []);
   const addDays = (dateString, days) => {
     const dateParts = dateString.split("/");
@@ -66,6 +70,8 @@ export default function (props) {
   };
 
   return (
+    <>
+    {props.time!==null?(
     <Box>
       {days == 0 ? (
         <Typography>post has expired</Typography>
@@ -83,6 +89,8 @@ export default function (props) {
           </Typography>{" "}
         </div>
       )}
-    </Box>
+    </Box>):null
+        }
+        </>
   );
 }
