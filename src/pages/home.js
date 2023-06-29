@@ -78,7 +78,7 @@ export default function Home(props) {
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
   const handleDetails = (data, mode) => {
@@ -91,7 +91,7 @@ export default function Home(props) {
       <Container maxWidth="xl">
       <Cat  />
       <Box sx={theme.mixins.toolbar} />
-      <Typography variant="h1">
+      <Typography variant="h1" sx={{fontSize:{xs:18,sm:20,md:25}}}>
         Featured Post
       </Typography>
       {FeaturedPost == null ? (
@@ -128,7 +128,7 @@ export default function Home(props) {
           }
         </div>
       )}
-      <Typography variant="h1">
+      <Typography variant="h1" sx={{fontSize:{xs:18,sm:20,md:25}}}>
         Used Products
       </Typography>
 
@@ -190,7 +190,7 @@ export default function Home(props) {
           }
         </div>
       )}
-      <Typography variant="h1">
+      <Typography variant="h1" sx={{fontSize:{xs:18,sm:20,md:25}}}>
         Bid Products
       </Typography>
 

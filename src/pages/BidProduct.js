@@ -30,6 +30,7 @@ export default function BidProduct(props) {
   const [C, setC] = useState(null);
   const [SubCategory, setSubCategory] = useState(null);
   const [city, setCity] = useState(null);
+  const [filtered,setFiltered] = useState(null);
 
   const getSubcategory = (x) => {
     console.log("in start");
@@ -73,6 +74,9 @@ export default function BidProduct(props) {
       .catch((error) => {
         console.log(error);
       });
+
+
+
   }, []);
   useEffect(() => {
     console.log("Wow");
@@ -117,7 +121,90 @@ export default function BidProduct(props) {
     setProducts(dummy);
     setFilterValue(initial);
   };
+useEffect(() => {
+  
+   
+  if(props.Feature!==null && Products!==null)
+  {
+    const converted = props.Feature.map((feature) => {
+      return ChangeObject(feature);
+    }).filter((obj) => obj !== null);
+    setFiltered(converted)
+    const filteredProducts = Products.filter((item) => !props.Feature.some((featureItem) => featureItem.postId._id === item._id));
+    setFiltered((prevFiltered) => [...prevFiltered, ...filteredProducts]);
+  }
+},[props.Feature,Products])
+const ChangeObject=(item)=>{
+  if(item.postId.productType=="Bidding Item")
+  {
+  const inputObject = {
+    "_id": item._id,
+    "postId": {
+      "closeBid": item.postId.closeBid,
+      "StatusOfActive": item.postId.StatusOfActive,
+      "_id":item.postId._id,
+      "title": item.postId.title,
+      "description":  item.postId.description,
+      "images":item.postId.images,
+      "productPrice": item.postId.productPrice,
+      "subcategoryId":item.postId.subcategoryId,
+      "userId": {
+        "_id": item.postId.userId._id,
+        "firstName": item.postId.userId.firstName,
+        "lastName": item.postId.userId.lastName,
+        "password":item.postId.userId.password,
+        "email": item.postId.userId.email,
+        "phoneNo":item.postId.userId.phoneNo,
+        "gender": item.postId.userId.gender,
+        "address": item.postId.userId.address,
+        "dob": item.postId.userId.dob,
+        "role": item.postId.userId.role,
+        "currentCity":item.postId.userId.currentCity,
+        "statusOfUser":item.postId.userId.statusOfUser,
+        "tryAgainToBecomeSeller": item.postId.userId.tryAgainToBecomeSeller,
+        "createdAt": item.postId.userId.createdAt,
+        "updatedAt":item.postId.userId.updatedAt,
+        "__v": item.postId.userId.__v,
+        "dp": item.postId.userId.dp
+      },
+      "productType": item.postId.productType,
+      "createdAt": item.postId.createdAt,
+      "updatedAt":item.postId.updatedAt,
+      "__v": item.postId.__v
+    },
+    "__v": item.__v,
+    "approvedStatus": item.approvedStatus,
+    "createdAt": item.createdAt,
+    "paymentScreenShot":item.paymentScreenShot ,
+    "updatedAt":item.updatedAt,
+    "approvedDate":item.approvedDate
+  };
+  
+  const outputObject = {
+    "_id": inputObject.postId._id,
+    "title": inputObject.postId.title,
+    "description": inputObject.postId.description,
+    "images": inputObject.postId.images.map((image) => image.replace("\\", "/")),
+    "productPrice": inputObject.postId.productPrice,
+    "subcategoryId": inputObject.postId.subcategoryId,
+    "userId": inputObject.postId.userId,
+    "productType": inputObject.postId.productType,
+    "closeBid": inputObject.postId.closeBid,
+    "StatusOfActive": inputObject.postId.StatusOfActive,
+    "createdAt": inputObject.postId.createdAt,
+    "updatedAt": inputObject.postId.updatedAt,
+    "__v": inputObject.postId.__v
+  };
+  console.log("not converted",item);
+  console.log("this is converted",outputObject);
+  return outputObject;
+}
+return null;
 
+}
+useEffect(() => {
+  console.log("this is sfiltereted",filtered);
+},[filtered])
   return (
     <Container maxWidth="xl">
       <Box sx={theme.mixins.toolbar} />
@@ -204,12 +291,12 @@ export default function BidProduct(props) {
       </Grid>
     </Container> */}
     <Grid container>
-        {Products == null || Products.length === 0 ? (
+        {filtered == null || filtered.length === 0 ? (
           <Grid item sm={12}>
             <Empty />
           </Grid>
         ) : (
-          Products.map((p, index) => {
+          filtered.map((p, index) => {
             const isFeatured =
     props.Feature !== null &&
     Array.isArray(props.Feature) &&

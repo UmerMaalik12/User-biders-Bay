@@ -261,15 +261,20 @@ const Navbar = (props) => {
               </IconButton>
             </Box>
 
-            <Box > 
+            <Box  sx={{alignContent:"center",alignItems:"center",justifyContent:"space-between"}} > 
+              <Box sx={{marginBottom:{xs:"-25px",sm:"-20px",md:"-25px"}}}>
               <Badge color="primary" badgeContent={props.wishlist?.length}>
                 <FavoriteIcon onClick={()=>navigate("/favourite")} color="primary" />
               </Badge>
+              </Box>
+              <Box>
               <AccountCircleIcon
                 onClick={() => navigate("/account")}
                 sx={{ marginLeft: "30px", mr: 3 }}
                 color="primary"
               />
+              </Box>
+              
             </Box>
           </Stack>
         </Box>

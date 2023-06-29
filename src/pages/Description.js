@@ -5,6 +5,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { useLocation } from "react-router-dom";
+
+import LocalPoliceRoundedIcon from '@mui/icons-material/LocalPoliceRounded';
+
 import {
   Button,
   Grid,
@@ -17,7 +20,8 @@ import {
   Box,
   Avatar,
   Divider,
-  Tooltip
+  Tooltip,
+  Badge
 } from "@mui/material";
 import Navbar from "../comonents/navbar";
 import { AppbarSpace } from "../comonents/AppbarSpace";
@@ -42,6 +46,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { createBrowserHistory } from "history";
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { BASE_URL } from "../Config/constant";
 
 const initial = {
   comment: "",
@@ -75,6 +80,7 @@ export default function (props) {
   const descriptionRef = useRef(null);
   const [CloseBIdFlag,setcloseBIdFlag] = useState(location.state.x.closeBid)
   const [HideBidFlag,setHideBidFlag] = useState(true)
+  const [JoiDate, setDate] = useState("");
   // useEffect(() => {
   //   const descriptionHeight = descriptionRef.current.clientHeight;
   //   const paperHeight = 200;
@@ -84,7 +90,11 @@ export default function (props) {
   //     "seller-description-paper"
   //   ).style.marginTop = `${marginTop}px`;
   // }, [location.state.x.description]);
-
+  const convertData = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long",day:"numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
   useEffect(() => {
     const localUserId=JSON.parse(localStorage.getItem("user Info"));
     if(z==localUserId._id)
@@ -155,6 +165,10 @@ export default function (props) {
       console.log("edit flag",editFlag);
       
       console.log("hide walue",HideBidFlag);
+
+      const originalDate = location.state.x.createdAt;
+    const convertedDate = convertData(originalDate);
+    setDate(convertedDate);
   }, []);
   useEffect(()=>{
     console.log("the value of edit flag ",editFlag);
@@ -366,7 +380,10 @@ const ResumeBid=()=>
           <Grid item xs={12} md={12}>
             <Slider
              ShowDelete={false}
-             style={{height:"500px"}}
+             
+             style={{"@media (max-width: 576px)": {
+              height:"250px"
+            },}}
               data={location.state.x}
               image={
                 location.state.x.images.length
@@ -376,7 +393,7 @@ const ResumeBid=()=>
             />
           </Grid>
 
-          <Grid item sm={12} md={12}>
+          <Grid item xs={12} md={12}>
             <div
               className="Scroll"
               style={{
@@ -388,7 +405,7 @@ const ResumeBid=()=>
               }}
             >
               {comments.length == 0 ? (
-                <h1>Write Comments</h1>
+                <h1>No Comments</h1>
               ) : (
                 comments.map((p, index) => {
                   return (
@@ -412,7 +429,16 @@ const ResumeBid=()=>
                     >
                       <Paper sx={{ px: 3, py: 1 }}>
                         <Box display="flex">
-                          <Avatar sx={{width:30,height:30}}/>
+                          {p.userId._id==location.state.x.userId._id?<Badge
+  overlap="circular"
+  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+  badgeContent={
+    <LocalPoliceRoundedIcon sx={{fontSize:"20px"}}/>
+  }
+>
+  <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+</Badge>: <Avatar sx={{width:30,height:30}}/>}
+                         
 
                           <Stack pl={1} pt={0.2}>
                             <Typography variant="body1" color="text.disable">
@@ -527,9 +553,13 @@ const ResumeBid=()=>
                     <Coundown time={location.state.x.createdAt} />
                   </Typography>
                 ) : null}
+                <Typography variant="subtitle" fontWeight={500}>
+               {JoiDate}
+              </Typography>
               </Box>
 
               <Box pt={8}>
+              
                 <Typography variant="h6">Description</Typography>
                 <Typography
                   ref={descriptionRef}
@@ -568,7 +598,7 @@ const ResumeBid=()=>
                     </Typography>
                     
                   </Box>
-                  {editFlag==1?
+                  
                   <Accordion
               expanded={expanded === "panel2"}
               onChange={handleExpand("panel2")}
@@ -584,12 +614,12 @@ const ResumeBid=()=>
                   <Box key={p._id} py={1}>
                     <Grid container>
                       <Grid item>
-                        <Avatar />
+                        <Avatar src={editFlag==1?`${BASE_URL}${p.userId.dp}`:null}/>
                       </Grid>
                       <Grid item ml={1}>
                         <Stack sx={{ lineHeight: "1" }}>
                           <Typography variant="subtitle1" color="text.disable">
-                            Name
+                            {p.userId.firstName}
                           </Typography>
                           
                         </Stack>
@@ -609,11 +639,23 @@ const ResumeBid=()=>
                       
                      {"Bid:"}{p.bidingPrice}
                     </Typography>
+                    {editFlag==1?
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      lineHeight={1}
+                      pb={1}
+                      sx={{fontWeight:"bold",marginLeft:"50px"}}
+                    >
+                      
+                     {"Phone No:"}{p.userId.phoneNo}
+                    </Typography>
+:null}
                     <Divider />
                   </Box>
                 ))}
               </AccordionDetails>
-            </Accordion>:null}
+            </Accordion>
             {editFlag==1?null:
                   <Type2Field
                     Label="Bid"
@@ -646,6 +688,7 @@ const ResumeBid=()=>
               }
               sx={{ p: 3, width: "100%", mt: "-25px" }}
             >
+              
               <Typography variant="h6" fontWeight={500}>
                 Seller Description
               </Typography>

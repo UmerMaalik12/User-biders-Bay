@@ -221,7 +221,7 @@ if(userData!==" " && userData!==undefined)
                           <Grid item xs={2} sm={4} md={4} key={index}>
                             {isFeatured ? (
                               <CardUpdate
-                                click={() => handleDetails(p, "bid")}
+                                click={() => handleDetails(p,p.productType==="Bidding Item"?"bid":"used")}
                                 heartData={p._id}
                                 setWhishlist={props.setWhishlist}
                                 title={p.title}
@@ -239,7 +239,7 @@ if(userData!==" " && userData!==undefined)
                               />
                             ) : (
                               <CardUpdate
-                                click={() => handleDetails(p, "bid")}
+                                click={() => handleDetails(p, p.productType==="Bidding Item"?"bid":"used")}
                                 heartData={p._id}
                                 setWhishlist={props.setWhishlist}
                                 title={p.title}

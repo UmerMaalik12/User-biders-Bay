@@ -9,6 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Coundown from '../comonents/Coundown'
 import VerifiedIcon from '@mui/icons-material/Verified';
+import "./updatedCard.css"
 export default function ActionAreaCard({
   url,
   title,
@@ -24,7 +25,7 @@ export default function ActionAreaCard({
   extraProp
 
 }) {
-  const MAX_TITLE_LENGTH = 17;
+  const MAX_TITLE_LENGTH = 14;
 
   const [check, setcheck] = useState(0);
   const truncatedTitle =
@@ -109,6 +110,12 @@ export default function ActionAreaCard({
         margin: 2,
         borderRadius: "5%",
         boxShadow: "5px 4px 8px 0px rgba(0, 0, 0, 0.2)",
+        "@media (max-width: 600px)": {
+          maxWidth: 150,
+          minWidth: 150,
+          margin: 1,
+          borderRadius: "3%",
+        },
       }}
     >
       {/* <CardActionArea> */}
@@ -123,12 +130,7 @@ export default function ActionAreaCard({
   <div style={{ position: 'relative' }}> 
       <img
         onClick={click}
-        style={{
-          height: 200,
-          width: "100%",
-          objectFit: "fill",
-          cursor: "pointer",
-        }}
+        className="img-container"
         src={url}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null; // prevents looping
@@ -147,9 +149,9 @@ export default function ActionAreaCard({
       padding: '4px',
      
     }}>
-      <Typography >
+      <div > 
           {name=="bid"?<Coundown time={date}></Coundown>:null}
-        </Typography >
+        </div >
       </Card>:null}
       
      {extraProp==true?
@@ -162,7 +164,7 @@ export default function ActionAreaCard({
       padding: '4px',
      
     }}>
-      <Typography sx={{color:"white"}} >
+      <Typography sx={{color:"white",fontSize:{xs:10,sm:12,md:16}}} >
          Featured
         </Typography >
       </Card>:null}
@@ -170,19 +172,19 @@ export default function ActionAreaCard({
 </div>
       <CardContent>
         <Box display='flex' justifyContent='space-between'>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography sx={{fontSize:{xs:12,sm:14,md:25}}} gutterBottom variant="h5" component="div">
             {truncatedTitle}
           </Typography>
           <IconButton disableRipple onClick={() => fav(y)} sx={{padding: 0}}>
             {check == 1 ? (
-              <FavoriteIcon sx={{ color: "#e81111", p: 0 }} />
+              <FavoriteIcon sx={{ color: "#e81111", p: 0,fontSize:{xs:18,sm:12,md:25} }} />
             ) : (
-              <FavoriteBorderOutlinedIcon />
+              <FavoriteBorderOutlinedIcon sx={{fontSize:{xs:18,sm:12,md:25}}} />
             )}
           </IconButton>
         </Box>
 
-        <Typography variant="body2" color="text.secondary">
+        <Typography  sx={{fontSize:{xs:8,sm:9,md:16}}}variant="body2" color="text.secondary">
           {"RS."}{price}
         </Typography>
        

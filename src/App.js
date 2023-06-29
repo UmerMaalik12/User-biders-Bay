@@ -63,8 +63,8 @@ function App() {
   }, []);
   useEffect(() => {
     console.log("app js log");
-    if(token!=="ok")
-    {
+  
+    
       api
       .get("/payment-featured/featured_post/")
       .then((response) => {
@@ -75,9 +75,9 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-    }
+    
   
-  }, [token]);
+  }, []);
   useEffect(()=>{
     api
     .get("/favorite/")
@@ -117,12 +117,12 @@ function App() {
           />
           <Route
             exact path="Details"
-            element={<Description setWhishlist={setWhishlist} />}
+            element={<PrivateRoute role={["seller","buyer"]}><Description setWhishlist={setWhishlist} /></PrivateRoute>}
           />
           
           <Route exact path="bsprofile" element={<BuyerSellerProfile Feature={Feature}/>} />
           
-          <Route exact path="Search" element={<Search />} />
+          <Route exact path="Search" element={<Search Feature={Feature}/>} />
           
           <Route exact path="ForgotPassword" element={<Otp />} />
       

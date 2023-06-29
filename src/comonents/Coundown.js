@@ -82,8 +82,8 @@ export default function (props) {
             alignItems: "center",
           }}
         >
-          <TimerOutlinedIcon sx={{ color: "#ee0300"  }} />{" "}
-          <Typography color='textSecondary' variant='body1' sx={{ fontSize: 18 , pl: 1}}>
+          <TimerOutlinedIcon sx={{ color: "#ee0300",fontSize:{xs:12,sm:14,md:18}  }} />{" "}
+          <Typography color='textSecondary' variant='body1' sx={{ fontSize:{xs:12,sm:14,md:18} , pl: 1}}>
             {" "}
             {days} {"days"}
           </Typography>{" "}

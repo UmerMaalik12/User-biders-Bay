@@ -209,7 +209,7 @@ export default function Search() {
         columns={{ xs: 4, sm: 8, md: 12 }}
         sx={{ display: "flex", flexDirection: "column" }}
       >
-        <Grid>
+        <Grid >
           <Typography variant="h5" sx={{ marginTop: 10, marginLeft: 10 }}>
             {"Searched for "}
             {location.state.Data == undefined
@@ -217,7 +217,7 @@ export default function Search() {
               : location.state.Data}
           </Typography>
         </Grid>
-        <Grid container>
+        <Grid container sx={{marginLeft:10}}>
           {Products == null || Products.length == 0 ? (
             <Grid item sm={12}>
              <Empty/>

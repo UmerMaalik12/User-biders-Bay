@@ -1,0 +1,13 @@
+.img-container {
+    height: 200px;
+    width: 100%;
+    object-fit: fill;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .img-container {
+      height: 90px;
+    }
+  }
+ 
