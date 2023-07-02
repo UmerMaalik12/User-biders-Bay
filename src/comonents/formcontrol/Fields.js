@@ -1,12 +1,14 @@
 import React from "react"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { TextField,InputAdornment } from "@mui/material";
+import { TextField,InputAdornment,useMediaQuery } from "@mui/material";
 import { Password } from "@mui/icons-material";
 export function Type1Field(props){
+  const isMobile = useMediaQuery("(max-width: 600px)");
    const {error=null}=props;
     return(
-        <TextField id="outlined-basic" label={props.label} type={props.type} name={props.Name} value={props.Value} onChange={props.Change} variant="outlined"   required style={props.style} sx={props.as}
+        <TextField id="outlined-basic" label={props.label} type={props.type} name={props.Name} value={props.Value} onChange={props.Change} variant="outlined"   required style={props.style} sx={props.as} multiline={isMobile &&props.multiline}
+        rows={isMobile && props.rows? 4 : 1}
         InputProps={{
           startAdornment:<InputAdornment position="start"><input hidden accept="image/*" type="file" />
          {props.x}</InputAdornment>

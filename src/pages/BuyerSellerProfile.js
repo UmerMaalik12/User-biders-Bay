@@ -144,7 +144,8 @@ if(userData!==" " && userData!==undefined)
                     height: "170px",
                     borderRadius: 110,
                     width: "190px",
-                    height: "190px"
+                    height: "190px",
+               
                   }}
                   src={`${BASE_URL}${userData.dp}`}
                 />
@@ -218,7 +219,7 @@ if(userData!==" " && userData!==undefined)
                       
                       return (
                         p.StatusOfActive && (
-                          <Grid item xs={2} sm={4} md={4} key={index}>
+                          <Grid item xs={6} sm={4} md={4} key={index}>
                             {isFeatured ? (
                               <CardUpdate
                                 click={() => handleDetails(p,p.productType==="Bidding Item"?"bid":"used")}

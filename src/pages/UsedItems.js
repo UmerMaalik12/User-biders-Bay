@@ -49,7 +49,7 @@ export default function UsedItems(props) {
       .then((response) => {
         console.log(response.data.data.allProducts[8]);
         setProducts(response.data.data.allProducts);
-        setDummy(response.data.data.allProducts);
+     
       })
       .catch((error) => {
         console.log(error);
@@ -108,14 +108,16 @@ export default function UsedItems(props) {
         });
       }
 
-      setProducts(updatedList);
+      
+      setFiltered(updatedList);
     }
   };
   const handleDetails = (data, mode) => {
     navigate("/Details", { state: { x: data, Mode: mode } });
   };
   const remove = () => {
-    setProducts(dummy);
+    
+    setFiltered(dummy);
     setFilterValue(initial);
   };
   useEffect(() => {
@@ -128,8 +130,10 @@ export default function UsedItems(props) {
         return ChangeObject(feature);
       }).filter((obj) => obj !== null);
       setFiltered(converted)
+      setDummy(converted)
       const filteredProducts = Products.filter((item) => !props.Feature.some((featureItem) => featureItem.postId._id === item._id));
       setFiltered((prevFiltered) => [...prevFiltered, ...filteredProducts]);
+      setDummy((prevFiltered) => [...prevFiltered, ...filteredProducts])
     }
   },[props.Feature,Products])
   const ChangeObject=(item)=>{
@@ -205,40 +209,50 @@ export default function UsedItems(props) {
     <Container maxWidth="xl">
       <Box sx={theme.mixins.toolbar} />
       <Box sx={theme.mixins.toolbar} />
-      <Box display="flex" justifyContent="space-around" alignItems="center">
-        <Stack direction="row" spacing={1}>
+      <Box display="flex" justifyContent="space-around" alignItems="center" sx={{
+        width: "100%",
+        flexDirection:{xs:"column",md:"row"},
+        marginBottom:{xs:"20px",md:"20px"}
+       
+       
+      }}>
+        <Stack direction={{sm: 'row', xs: 'column' }} spacing={1} sx={{width:{xs:"100%",md:"auto"}}}>
           <Filter
             label="Category"
             Name="Category"
             data={C != null ? C : [0, 1, 2]}
             value={FilterValue.Category}
             Change={FilterChange}
-            style={{ width: 120 }}
+            // style={{ width: 120,}}
           />
+
           <Filter
             label="Sub-Category"
             Name="SubCategory"
             data={SubCategory != null ? SubCategory : [0, 1, 2]}
             value={FilterValue.SubCategory}
             Change={FilterChange}
-            style={{ width: 150 }}
+            // style={{ width: 150}}
           />
+
           <Filter
             label="City"
             Name="city"
             data={city != null ? city : [0, 1, 2]}
             value={FilterValue.city}
             Change={FilterChange}
-            style={{ width: 200 }}
+            // style={{ width: 200}}
           />
         </Stack>
-        <Box>
+
+        <Box sx={{marginTop:{xs:"35px",md:"0px"}}}>
           <Ranger
             Name="PriceRange"
             Change={FilterChange}
             value={FilterValue.PriceRange}
           />
         </Box>
+
         <Stack direction="row" spacing={1}>
           <Button onClick={filter} variant="contained">
             Filter
@@ -291,7 +305,7 @@ export default function UsedItems(props) {
             
             return (
               p.StatusOfActive && (
-                <Grid item xs={2} sm={4} md={3} key={index}>
+                <Grid item xs={6} sm={4} md={3} key={index}>
                   {isFeatured ? (
                     <CardUpdate
                     click={() => handleDetails(p, "used")}

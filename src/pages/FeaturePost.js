@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert} from '@mui/material'
+import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert, Container} from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -52,7 +52,7 @@ export default function FeaturePost() {
   }
 }
   return (
-    <Grid>  <Box sx={theme.mixins.toolbar} />
+    <Container>  <Box sx={theme.mixins.toolbar} />
      {dis != null ? (
         <Stack sx={{ width: "100%",marginTop:"40px" }} spacing={2}>
           <Alert severity="error">{dis}</Alert>
@@ -116,6 +116,6 @@ Account Number: 0234XXXXXXXXXX
         
     </Paper>
     
-    </Grid>
+    </Container>
   )
 }

@@ -22,7 +22,9 @@ export default function ActionAreaCard({
   name,
   status,
   MypostCheck,
-  extraProp
+  extraProp,
+  resume,
+  expired
 
 }) {
   const MAX_TITLE_LENGTH = 14;
@@ -189,8 +191,8 @@ export default function ActionAreaCard({
         </Typography>
        
         {MypostCheck==1?
-        <Typography sx={{marginTop:"10px"}}>
-          Status:{status==true?<Typography sx={{color:"#72a4d4",display:"inline"}}>Active</Typography>:<Typography sx={{color:"red",display:"inline"}}>Not Active</Typography>}
+        <Typography sx={{marginTop:"10px",fontSize:{xs:10,md:15}}}>
+          Status:{status==true?<Typography sx={{color:"#72a4d4",display:"inline",fontSize:{xs:10,md:15}}}>Active</Typography>:<Typography sx={{color:"red",display:"inline",fontSize:{xs:10,md:15}}}>Not Active</Typography>}
         </Typography>:null}
       </CardContent>
       {/* </CardActionArea> */}

@@ -65,6 +65,8 @@ export default function (props) {
   const [expanded, setExpanded] = useState(false);
   const [allBids,setAllBids]=useState([])
   const [editFlag,setEditFlag]=useState(0);
+  const [expired, setExpired] = useState(false)
+
 
   const [check, setcheck] = useState(0);
 
@@ -381,7 +383,7 @@ const ResumeBid=()=>
             <Slider
              ShowDelete={false}
              
-             style={{"@media (max-width: 576px)": {
+             style={{height:"500px","@media (max-width: 576px)": {
               height:"250px"
             },}}
               data={location.state.x}
@@ -550,7 +552,7 @@ const ResumeBid=()=>
               <Box>
                 {location.state.Mode != "used" ? (
                   <Typography>
-                    <Coundown time={location.state.x.createdAt} />
+                    <Coundown time={location.state.x.createdAt} onExpired={(val)=>{setExpired(val)}} />
                   </Typography>
                 ) : null}
                 <Typography variant="subtitle" fontWeight={500}>
@@ -576,7 +578,7 @@ const ResumeBid=()=>
               {location.state.Mode != "used" ? (
                 
             
-             HideBidFlag==true?(<Paper sx={{ p: 3, width: "100%" }}>
+             HideBidFlag==true ?(<Paper sx={{ p: 3, width: "100%" }}>
                 
                   <Typography variant="h6">
                     {editFlag==1?"Bidding Details":"Please Enter your Bid"}
@@ -656,7 +658,8 @@ const ResumeBid=()=>
                 ))}
               </AccordionDetails>
             </Accordion>
-            {editFlag==1?null:
+            {editFlag==1 ?null:(
+              !expired &&
                   <Type2Field
                     Label="Bid"
                     //  error={errors.password}
@@ -675,7 +678,7 @@ const ResumeBid=()=>
                         sx={{ color: "black" }}
                       />
                     }
-                  ></Type2Field>}
+                  ></Type2Field>)}
                   
               </Paper>):<Paper sx={{ p: 3, width: "100%" }}><Typography sx={{color:"red"}}>The Seller Has Paused The Bidding</Typography></Paper>
               ) : null}

@@ -399,12 +399,14 @@ const Login = (props) => {
               {/* </Grid> */}
             </Grid>
           </Grid>
-          <Grid align="center" item xs={12} sm={12}>
+          <Grid  item xs={6} sm={12}>
           <Type1Field
               label="Address"
               error={errors.address}
-              style={{ marginBottom: 10, marginTop: 10, width:"510px",marginLeft:-45 }}
-              x={<HomeIcon sx={{ color: "black" }} />}
+              multiline 
+              rows={4}
+              as={{ marginBottom: 10, marginTop: 10, width:{xs:200,md:"510px"} }}
+              x={<HomeIcon sx={{ color: "black"}} />}
               Name="Address"
               Value={Avalue && Avalue.address!= null ?Avalue.address : "Address Loading"}
               Change={AccountChange}

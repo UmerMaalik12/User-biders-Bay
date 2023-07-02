@@ -20,7 +20,7 @@ import Footer from "./comonents/Footer";
 import Otp from "./pages/Otp";
 import EditPost from "./pages/EditPost";
 import FeaturePost from "./pages/FeaturePost";
-
+import Inspection from "./pages/Inspection";
 
 const theme = createTheme({
   palette: {
@@ -108,6 +108,7 @@ function App() {
         <Routes>
           <Route exact path="login" element={<Login setToken={setToken}/>} />
           <Route exact path="signup" element={<SignUP />} />
+          <Route exact path="Inspection" element={<Inspection />} />
          
           <Route exact path="/" element={<Home setWhishlist={setWhishlist} Feature={Feature}/>} />
           <Route exact path="bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />

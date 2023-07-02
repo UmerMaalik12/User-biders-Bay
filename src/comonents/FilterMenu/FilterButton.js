@@ -20,10 +20,14 @@ const Filter = (props) => {
         onChange={props.Change}
         name={props.Name}
         label={props.label}
+        
         sx={{
           "& fieldset": { border: "1px solid black" },
+          width:{xs:"100%",md:"150px"}
+       
+          
         }}
-        style={props.style}
+        // style={props.style}
       >
         {Array.isArray(data) && data[0] && data[0].title !== undefined
           ? data.map((option) => (
