@@ -108,8 +108,22 @@ useEffect(() => {
   console.log("this is images",images);
   
   },[images])
+  const validate = () => {
+    let temp = {};
+    temp.productPrice = postValue.productPrice ? "" : "Price should not be empty";
+    temp.title = postValue.title ? "" : "Title should not be empty";
+    temp.description = postValue.description ? "" : "Description should not be empty";
+
+    setErrors({
+      ...temp,
+    });
+    return Object.values(temp).every((x) => x == "");
+  };
   const UpdatePost=(title,product_picture,description,productPrice,subcategoryId,ProductType)=>
   {
+    if(validate())
+    {
+    
     const token = localStorage.getItem("user token");
     console.log(token)
     let formData=new FormData(),key;
@@ -131,7 +145,8 @@ useEffect(() => {
     }
     for(key of entries) {
       console.log(key);
-  }
+    }
+  
   const config = { headers: {
     'Authorization':JSON.parse(token),
     'Content-Type': 'multipart/form-data' } };
@@ -161,6 +176,7 @@ useEffect(() => {
         
       }
     });
+  }
   }
     const paperStyle={padding:20,height:"auto",width:isMobile?"350px":"600px",margin:"20px auto",'@media only screen and (max-width: 767px)': {
       width:300
@@ -205,6 +221,7 @@ useEffect(() => {
           name='category'
           onChange={postChange}
           value={postValue.category}
+          helperText="Category will not be changed until you update"
          
           style={{marginBottom:10,width:'100%'}}
           // onClick={()=>}
@@ -249,6 +266,7 @@ useEffect(() => {
           name='subcategoryId'
           value={postValue.subcategoryId}
           onChange={postChange}
+          helperText="Sub-Category will not be changed until you update"
           
         > 
        {SubCategory!=null?SubCategory.map((option) => (
@@ -261,6 +279,7 @@ useEffect(() => {
         </TextField>
         <Type1Field label="Price"  
          Name='productPrice'
+         error={errors.productPrice}
          Value={postValue.productPrice}
          Change={postChange}
         style={{marginBottom:10,width:'100%'}} x={<LocalOfferIcon  sx={{color:"black"}}/>} type='number'  as={{input:{
@@ -281,7 +300,7 @@ useEffect(() => {
                 
                 </Grid>
                 <Grid xs={12} container sx={{marginTop:3,display:"flex",alignItems:"center",flexDirection:"column"}}>
-                <Type1Field label="Tittle"  Name='title' Value={postValue.title} Change={postChange} style={{marginBottom:10,width:'100%'}} x={<AbcIcon sx={{color:"black"}}/>} ></Type1Field>
+                <Type1Field label="Tittle"  Name='title' Value={postValue.title} Change={postChange} error={errors.title} style={{marginBottom:10,width:'100%'}} x={<AbcIcon sx={{color:"black"}}/>} ></Type1Field>
        
                 </Grid>
                 <Grid xs={12} container sx={{marginTop:3,display:"flex",alignItems:"center",flexDirection:"column"}}>
@@ -290,9 +309,11 @@ useEffect(() => {
           label="Description"
           name='description'
           value={postValue.description}
+          error={errors.description}
           onChange={postChange}
           multiline
           rows={4}
+          helperText={errors.description}
           style={{width:'100%'}}/>
                 </Grid>
                 
@@ -315,7 +336,7 @@ useEffect(() => {
         <Button
           variant="contained"
           // onClick={()=>NewPost( postValue.title,postValue.product_picture,postValue.description,postValue.productPrice,postValue.subcategoryId,postValue.productType)}
-
+          onClick={()=>navigate(-1)}
           style={{ marginBottom: 10 ,width:100,marginTop:40}}
           sx={{
             backgroundColor: "red",

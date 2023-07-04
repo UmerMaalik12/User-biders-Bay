@@ -33,7 +33,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 const Navbar = (props) => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [search, setSearch] = useState("");
-
+const [catFlag,setCatFlag] = useState(false);
   // const theme = useTheme();
   // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallScreen = useMediaQuery("(max-width: 900px)");
@@ -112,7 +112,7 @@ const Navbar = (props) => {
           sx={{ color: "black" }}
         />
         <Tabs label="Categories" sx={{ color: "black",paddingTop:"1px" }}>
-          <ButtonList  name="Categories"></ButtonList>
+          <ButtonList  name="Categories" check={0}></ButtonList>
         </Tabs>
         <Tab
           onClick={() => navigate("/bid")}
@@ -156,9 +156,12 @@ const Navbar = (props) => {
             >
               <ListItemText primary="Home" />
             </ListItem>
-            <ListItem>
-              <ListItemText primary="Categories" />
-            </ListItem>
+            <div>
+      <ListItem button onClick={() => { setCatFlag(!catFlag); }}>
+        <ListItemText primary="Categories" />
+      </ListItem>
+      {catFlag === true && <ButtonList name="Categories" check={1} />}
+    </div>
             <ListItem
               onClick={() => {
                 handleDrawerClose();
@@ -175,7 +178,9 @@ const Navbar = (props) => {
             >
               <ListItemText primary="Used Items" />
             </ListItem>
-            <ListItem onClick={()=>navigate("/post")}>
+            <ListItem onClick={()=>{navigate("/post")
+          handleDrawerClose();}
+          }>
               <ListItemText primary="Sell" />
             </ListItem>
           </List>

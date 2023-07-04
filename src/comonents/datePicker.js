@@ -14,6 +14,6 @@ export default function Datepicker(props){
     }
     )
     return (
-       <DatePicker value={value} wrapperClassName="datePicker" selected={value} dateFormat="dd/MM/yyyy"showYearDropdown scrollableMonthYearDropdown onChange={date =>change(convert(props.Name,date))}></DatePicker>
+       <DatePicker  disabled={props.dis} value={value} wrapperClassName="datePicker" selected={value} dateFormat="dd/MM/yyyy"showYearDropdown scrollableMonthYearDropdown onChange={date =>change(convert(props.Name,date))}></DatePicker>
       );
 }

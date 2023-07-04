@@ -36,7 +36,8 @@ export default function FeaturePost() {
         navigate(-1);
       })
       .catch(function (error) {
-        console.log("this is error");
+        console.log("this is error",error);
+        setdis(error.response.data.error)
       });
   };
   const handleScreenShot = (e) => {

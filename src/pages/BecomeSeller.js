@@ -39,7 +39,9 @@ const BecomeSeller = () => {
   const [temp1, setTemp1] = useState(null);
   const [temp2, setTemp2] = useState(null);
   const [dis, setdis] = useState(null);
-  const [check,setcheck] = useState(0);
+  const [Fpic,setFpic] = useState(false);
+  const [Bpic,setBpic] = useState(false);
+  const [cNuber,setCnumber]= useState(false);
   const paperStyle = {
     padding: 30,
     height: "auto",
@@ -82,7 +84,7 @@ const BecomeSeller = () => {
     console.log(front);
   }, [front]);
   const submit = (CNIC_front, CNIC_back, cnicNumber) => {
-    let x=0
+  
     console.log(cnicNumber);
     let formData = new FormData(),
       key;
@@ -100,7 +102,7 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("front", response);
-        setcheck(x+1)
+        setFpic(true)
       })
       .catch((error) => {
         console.log(error);
@@ -122,7 +124,7 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("back", response);
-        setcheck(x+1)
+     setBpic(true)
       })
       .catch((error) => {
         console.log(error);
@@ -146,18 +148,22 @@ const BecomeSeller = () => {
       )
       .then((response) => {
         console.log("number", response);
-        setcheck(x+1)
+        setCnumber(true)
       })
       .catch((error) => {
         console.log(error);
         setdis(error.response.data.message)
       });
-      console.log(check);
-      if(check==3)
-      {
-        navigate("/account")
-      }
+          
+     
   };
+  useEffect(()=>{
+    console.log("all value",Fpic,Bpic,cNuber);
+    if(Fpic&&Bpic&&cNuber)
+    {
+      navigate("/account")
+    }
+  },[Fpic,Bpic,cNuber])
   return (
     <Container maxWidth="sm" sx={{paddingBottom:2}}>
       <Box sx={theme.mixins.toolbar} />

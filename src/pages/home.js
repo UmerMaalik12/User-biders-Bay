@@ -107,6 +107,7 @@ export default function Home(props) {
               ) : (
                 FeaturedPost.map((p, index) => {
                   return (
+                    p.postId.StatusOfActive && (
                     <Grid item xs={2} sm={4} md={3} key={index}>
                       <CardUpdate
                         title={p.postId.title}
@@ -124,6 +125,7 @@ export default function Home(props) {
                          
                       ></CardUpdate>
                     </Grid>
+                    )
                   );
                 })
               )}

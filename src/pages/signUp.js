@@ -170,7 +170,7 @@ const SignUp = () => {
       )}
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
-          <img src={image} alt="bidderbay" style={{height:"100px"}}></img>
+         
           <Typography  style={{marginBottom:"15px"}} variant="h6">SignUp</Typography>
 
           <Grid container spacing={2}>

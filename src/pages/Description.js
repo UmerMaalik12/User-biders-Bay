@@ -7,7 +7,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import { useLocation } from "react-router-dom";
 
 import LocalPoliceRoundedIcon from '@mui/icons-material/LocalPoliceRounded';
-
+import InfoIcon from '@mui/icons-material/Info';
 import {
   Button,
   Grid,
@@ -573,13 +573,17 @@ function getDaysAgo(postDate) {
                          <IconButton  sx={{color:"black"}}> 
                          <ModeIcon   onClick={()=>navigate("/Edit",{ state: { ProductDetails: location.state.x }})}/>
                        </IconButton>
-                         </Tooltip></Grid>:  <IconButton sx={{alignContent:"end"}} disableRipple onClick={() => fav(y)}>
+                         </Tooltip></Grid>: <Stack sx={{flexDirection:"row"}}><Tooltip title="Inspection">
+                         <IconButton  sx={{color:"black"}}> 
+                         <InfoIcon   onClick={()=>navigate("/Inspection")}/>
+                       </IconButton>
+                         </Tooltip> <IconButton sx={{alignContent:"end"}} disableRipple onClick={() => fav(y)}>
                   {check == 1 ? (
                     <FavoriteIcon sx={{ color: "#e81111" }} />
                   ) : (
                     <FavoriteBorderOutlinedIcon />
                   )}
-                </IconButton>}
+                </IconButton></Stack>}
                 
                
               

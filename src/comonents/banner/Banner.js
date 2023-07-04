@@ -103,7 +103,7 @@ const TextContainer = styled.div`
   @media screen and (max-width: 600px) {
     top: 100px;
     left:60px;
-    font-size: 25px;
+    font-size: 15px;
 
   }
 `;

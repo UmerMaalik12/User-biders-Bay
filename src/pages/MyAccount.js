@@ -12,7 +12,7 @@ import {
   Box,
   Container,
   IconButton,
-  Stack
+  Stack,TextField,MenuItem
 } from "@mui/material";
 
 import api from '../Config/Api'
@@ -60,6 +60,7 @@ const Login = (props) => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
   const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
+  const [city,setCity]=useState(null)
   const [dp,setdp]=useState(null)
   const [temp1, setTemp1] = useState(null);
   const [dis, setdis] = useState(null);
@@ -93,11 +94,18 @@ const Login = (props) => {
     setAvalue(JSON.parse(localStorage.getItem("user Info")))
     
       window.scrollTo(0, 0);
+      api.get('/users/cities')
+    .then(function (response) {
+      console.log(response.data.data)
+      setCity(response.data.data)
+    })
   
   },[]);
 
   const sumbit=()=>
   {
+    if(Avalue && Avalue.role=="buyer")
+    {
     let formData=new FormData(),key;
     const entries = Object.entries(Avalue);
     for (const [key,value] of entries) {
@@ -145,6 +153,40 @@ const Login = (props) => {
     for(key of entries) {
       console.log(key);
   }
+}
+else{
+  api.post('/users/edit-seller-profile/', 
+      
+    {
+      phoneNo:Avalue.phoneNo,
+      currentCity:Avalue.currentCity
+    },
+    {
+      headers: {
+        'enctype': 'multipart/form-data' } 
+    },
+  
+    )
+    .then(response => {
+      console.log("update res",response.data.message);
+
+      localStorage.setItem("user Info",JSON.stringify(response.data.data))
+      setAvalue(JSON.parse(localStorage.getItem("user Info")))
+      setinfo(response.data.message)
+      setdis(null)
+      
+    })
+    .catch(error => {
+      console.log(error);
+
+      if (error) {
+        setdis(error.response.data);
+
+        
+      }
+    });
+
+}
   }
   const handleChanges=(e)=>
   {
@@ -297,7 +339,7 @@ const Login = (props) => {
         <Grid align="center" style={{ paddingBottom: 35 }}>
           <Avatar sx={{ height: 100, width: 100, fontSize: 50,marginBottom:3}} alt={Avalue && Avalue.firstName != null ?Avalue.firstName : "First Name  Loading"}
   src={Avalue && Avalue.dp!=null?`${BASE_URL}${Avalue.dp}`:null}></Avatar>
-  <Button sx={{backgroundColor: "black",
+  {Avalue&&Avalue.role=="buyer"?<Button sx={{backgroundColor: "black",
 
 "&:hover": {
   backgroundColor: "black",
@@ -305,9 +347,9 @@ const Login = (props) => {
 }}} variant="contained" component="label">
         Change Image
         <input  hidden accept="image/*" name='dp'   type="file" onChange={EditImage} />
-      </Button>
+      </Button>:null}
       <Grid sx={{marginTop:"50px"}}>
-      {x.role=='seller'?<Link onClick={handleInfo}>My Post</Link>:( x.tryAgainToBecomeSeller==true?<Typography onClick={()=>{navigate("/bseller")}}> Become Seller</Typography>:null)}
+      {x.role=='seller'?<Link onClick={handleInfo}>My Post</Link>:( x.tryAgainToBecomeSeller==false?<Typography onClick={()=>{navigate("/bseller")}}> Become Seller</Typography>:null)}
           
       </Grid>
           
@@ -316,6 +358,7 @@ const Login = (props) => {
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <Type1Field
+                dis={Avalue && Avalue.role!=="buyer"?true:null}
                 label="First Name"
                 style={{ marginBottom: 10 }}
                 x={<AbcIcon sx={{ color: "black" }} />}
@@ -331,9 +374,30 @@ const Login = (props) => {
                 x={<MailIcon sx={{ color: "black" }} />}
                 Name="email"
                 Value={Avalue && Avalue.email != null ?Avalue.email : "Email Loading"}
-                
+                dis={true}
               ></Type1Field>
-              <FormControl>
+               <TextField
+          id="outlined-select-currency"
+          select
+          label="City"
+          defaultValue="Lahore"
+          name='currentCity'
+          value={Avalue && Avalue.currentCity != null ?Avalue.currentCity : "city Loading"}
+          onChange={AccountChange}
+         
+          sx={{width:'84%'}}
+          // onClick={()=>}
+          
+        > 
+        {city!=null?city.map((option) => (
+            <MenuItem key={option.lat
+            } value={option.name
+            }>
+              {option.name}
+            </MenuItem>
+          )):null}
+           </TextField> 
+              <FormControl disabled={ Avalue && Avalue.role!=="buyer"?true:false}>
                 <FormLabel>Gender</FormLabel>
                 <RadioGroup
                   row
@@ -341,7 +405,7 @@ const Login = (props) => {
                   name="gender"
                   value={Avalue && Avalue.gender!= null ?Avalue.gender : "Gender Loading"}
                   onChange={AccountChange}
-
+                  disabled={true}
                   // onChange={}
                 >
                   <FormControlLabel
@@ -356,6 +420,7 @@ const Login = (props) => {
                   />
                 </RadioGroup>
               </FormControl>
+             
             </Grid>
             <Grid item xs={12} sm={6}>
               <Type1Field
@@ -365,6 +430,7 @@ const Login = (props) => {
                 Name="lastName"
                 Value={Avalue && Avalue.lastName!= null ?Avalue.lastName : "Last Name Loading"}
                 Change={AccountChange}
+                dis={Avalue && Avalue.role!=="buyer"?true:null}
               ></Type1Field>
               <Type1Field
                 label="Phone Number"
@@ -395,6 +461,7 @@ const Login = (props) => {
                 Name="dob"
                  value={Adate}
                   change={AccountChange}
+                  dis={Avalue && Avalue.role!=="buyer"?true:false}
               ></Datepicker>
               {/* </Grid> */}
             </Grid>
@@ -407,9 +474,10 @@ const Login = (props) => {
               rows={4}
               as={{ marginBottom: 10, marginTop: 10, width:{xs:200,md:"510px"} }}
               x={<HomeIcon sx={{ color: "black"}} />}
-              Name="Address"
-              Value={Avalue && Avalue.address!= null ?Avalue.address : "Address Loading"}
+              Name="address"
+              Value={Avalue && Avalue.address!==null ?Avalue.address : "Address Loading"}
               Change={AccountChange}
+              dis={Avalue && Avalue.role!=="buyer"?true:false}
             ></Type1Field>
           </Grid>
           <Grid align="center" item xs={12} sm={12}>
