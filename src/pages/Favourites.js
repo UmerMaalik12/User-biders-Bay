@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../comonents/navbar";
-import { Button, Grid, Box, Container, Stack } from "@mui/material";
+import { Button, Grid, Box, Container, Stack,Typography } from "@mui/material";
 import Card from "../comonents/card";
 import { AppbarSpace } from "../comonents/AppbarSpace";
 import axios from "axios";
@@ -13,7 +13,7 @@ import Ranger from "../comonents/PriceSlider/Slider";
 import Empty from "../comonents/EMPTYPAGE/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 const initial = {
   Category: "",
   SubCategory: "",
@@ -29,7 +29,9 @@ export default function Favorite(props) {
   const [C, setC] = useState(null);
   const [SubCategory, setSubCategory] = useState(null);
   const [city, setCity] = useState(null);
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const getSubcategory = (x) => {
     console.log("in start");
 
@@ -135,15 +137,21 @@ useEffect(() => {
           Filter
         </Button>
       </Grid> */}
-        <Box display="flex" justifyContent="space-around" alignItems="center">
-        <Stack direction="row" spacing={1}>
+    <Box display="flex" justifyContent="space-around" alignItems="center" sx={{
+        width: "100%",
+        flexDirection:{xs:"column",md:"row"},
+        marginBottom:{xs:"20px",md:"20px"}
+       
+       
+      }}>
+        <Stack direction={{sm: 'row', xs: 'column' }} spacing={1} sx={{width:{xs:"100%",md:"auto"}}}>
           <Filter
             label="Category"
             Name="Category"
             data={C != null ? C : [0, 1, 2]}
             value={FilterValue.Category}
             Change={FilterChange}
-            style={{ width: 120 }}
+            // style={{ width: 120,}}
           />
 
           <Filter
@@ -152,7 +160,7 @@ useEffect(() => {
             data={SubCategory != null ? SubCategory : [0, 1, 2]}
             value={FilterValue.SubCategory}
             Change={FilterChange}
-            style={{ width: 150 }}
+            // style={{ width: 150}}
           />
 
           <Filter
@@ -161,11 +169,11 @@ useEffect(() => {
             data={city != null ? city : [0, 1, 2]}
             value={FilterValue.city}
             Change={FilterChange}
-            style={{ width: 200 }}
+            // style={{ width: 200}}
           />
         </Stack>
 
-        <Box>
+        <Box sx={{marginTop:{xs:"35px",md:"0px"}}}>
           <Ranger
             Name="PriceRange"
             Change={FilterChange}
@@ -187,11 +195,27 @@ useEffect(() => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {Products == null || Products.length == 0 ? (
+        {Products == null ? (
+          
          <Grid item sm={12}>
          <Empty />
        </Grid>
         ) : (
+          Products.length == 0?<Box sx={{
+            display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
+
+  width:"100%",
+        
+  
+          }}><Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}><ProductionQuantityLimitsIcon sx={{fontSize:"100px" }}/> <Typography variant="h4">No Favorites Added</Typography></Box></Box>:
+          
           Products.map((p, index) => {
             // return (
             //   <Grid item xs={2} sm={4} md={3} key={index}>

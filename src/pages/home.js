@@ -29,7 +29,9 @@ export default function Home(props) {
   useEffect(() => {
     setx(data);
   }, [data]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   useEffect(() => {
     const token = localStorage.getItem("user token");
     api
@@ -108,6 +110,7 @@ export default function Home(props) {
                     <Grid item xs={2} sm={4} md={3} key={index}>
                       <CardUpdate
                         title={p.postId.title}
+                        click={() => handleDetails(p.postId, p.postId.productType!=="used"?"bid":"used")}
                         url={
                           p.postId.images.length
                             ? `${BASE_URL}${p.postId.images[0]}`

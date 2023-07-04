@@ -1,6 +1,6 @@
 import React, { useEffect} from "react";
 import { useState } from "react";
-import {Grid, Paper, TextField,FormControlLabel,Checkbox,FormGroup,Button,Box, Typography,Link,IconButton,InputAdornment,Stack,Alert} from "@mui/material";
+import {Grid, Paper, TextField,FormControlLabel,Checkbox,FormGroup,Button,Box, Typography,Link,IconButton,InputAdornment,Stack,Alert,useMediaQuery} from "@mui/material";
 import image from '../assets/logo.jpg'
 import AbcIcon from '@mui/icons-material/Abc';
 import Formcontrol from "../comonents/formcontrol/FormControl";
@@ -47,7 +47,10 @@ const Post=()=>
   const theme = useTheme();
   const [dis, setdis] = useState(null);
   const navigate = useNavigate();
-  
+  const isMobile = useMediaQuery("(max-width: 600px)");
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const getSubcategory=(x)=>
   {
     console.log("in start")
@@ -149,7 +152,8 @@ const Post=()=>
       }
     });
   }
-    const paperStyle={padding:20,height:"auto",width:600,margin:"20px auto"}
+
+    const paperStyle={padding:20,height:"auto",width:isMobile?"350px":600,margin:"20px auto"}
     
     return(
 

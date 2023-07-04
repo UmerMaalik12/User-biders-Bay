@@ -262,7 +262,7 @@ const Login = (props) => {
       
       <AppbarSpace></AppbarSpace>
       <Stack sx={{ width: "100%" }} id="top" spacing={2}>
-    <Alert severity="info" >{Avalue && Avalue.statusOfUser != null ? Avalue.statusOfUser : "Status Loading"}</Alert>
+    {x.tryAgainToBecomeSeller==true?null:<Alert severity="info" >{Avalue && Avalue.statusOfUser != null ? Avalue.statusOfUser : "Status Loading"}</Alert>}
   </Stack>
       {dis !== null ? (
   <Stack sx={{ width: "100%" }}  id="alert" spacing={2}>
@@ -307,7 +307,7 @@ const Login = (props) => {
         <input  hidden accept="image/*" name='dp'   type="file" onChange={EditImage} />
       </Button>
       <Grid sx={{marginTop:"50px"}}>
-      {x.role=='seller'?<Link onClick={handleInfo}>My Post</Link>:<Typography onClick={()=>{navigate("/bseller")}}> Become Seller</Typography>}
+      {x.role=='seller'?<Link onClick={handleInfo}>My Post</Link>:( x.tryAgainToBecomeSeller==true?<Typography onClick={()=>{navigate("/bseller")}}> Become Seller</Typography>:null)}
           
       </Grid>
           

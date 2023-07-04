@@ -41,7 +41,9 @@ export default function UsedItems(props) {
       setSubCategory(response.data.data);
     });
   };
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   useEffect(() => {
     const token = localStorage.getItem("user token");
     api

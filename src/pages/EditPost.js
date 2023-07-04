@@ -1,6 +1,6 @@
 import React, { useEffect} from "react";
 import { useState } from "react";
-import {Grid, Paper, TextField,FormControlLabel,Checkbox,FormGroup,Button,Box, Typography,Link,IconButton,InputAdornment,Stack,Alert} from "@mui/material";
+import {Grid, Paper, TextField,FormControlLabel,Checkbox,FormGroup,Button,Box, Typography,Link,IconButton,InputAdornment,Stack,Alert,useMediaQuery} from "@mui/material";
 import image from '../assets/logo.jpg'
 import AbcIcon from '@mui/icons-material/Abc';
 import Formcontrol from "../comonents/formcontrol/FormControl";
@@ -41,7 +41,7 @@ const ProductType = [
 
   };
 
-const EditPost=()=>
+const EditPost=(props)=>
 {
     const location = useLocation();
   const [Category,setCategory]=useState(null)
@@ -52,6 +52,10 @@ const EditPost=()=>
   const PostDetails=location.state.ProductDetails
   console.log(PostDetails);
   const [images,setimages]=useState(PostDetails.images);
+  const isMobile = useMediaQuery("(max-width: 600px)");
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const getSubcategory=(x)=>
   {
     console.log("in start")
@@ -144,14 +148,8 @@ useEffect(() => {
       console.log(response);
       if(response)
       {
-        // if(postValue.productType=='Bidding Item')
-        // {
-        //   navigate("/bid");
-        // }
-        // else
-        // {
-        //   navigate("/used");
-        // }
+        props.settag(props.tag+1)
+        navigate("/bsprofile", { state: { Data: PostDetails } })
       }
     })
     .catch(error => {
@@ -164,7 +162,10 @@ useEffect(() => {
       }
     });
   }
-    const paperStyle={padding:20,height:"auto",width:600,margin:"20px auto"}
+    const paperStyle={padding:20,height:"auto",width:isMobile?"350px":"600px",margin:"20px auto",'@media only screen and (max-width: 767px)': {
+      width:300
+    
+    },}
     
     return(
 
@@ -177,7 +178,7 @@ useEffect(() => {
       ) : (
         <div>{null}</div>
       )}
-             <Paper elevation={10} style={paperStyle}>
+             <Paper elevation={10} style={paperStyle} >
              <Grid align='center' >
               <Typography variant="h5" sx={{marginBottom:"10px"}}>Edit Post</Typography>
                 
@@ -220,20 +221,20 @@ useEffect(() => {
         
         <TextField
           id="outlined-select-currency"
-          select
+          // select
           label="Type"
           defaultValue="Bid"
           style={{marginBottom:10,width:'100%'}}
           name='productType'
           value={postValue.productType}
-          onChange={postChange}
+          // onChange={postChange}
           
         > 
-        {ProductType.map((option) => (
+        {/* {ProductType.map((option) => (
             <MenuItem key={option.value} value={option.label}>
               {option.label}
             </MenuItem>
-          ))}
+          ))} */}
         </TextField>
         
                 

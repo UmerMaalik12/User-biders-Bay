@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, IconButton, Box } from "@mui/material";
+import { CardActionArea, IconButton, Box,useMediaQuery } from "@mui/material";
 import api from "../Config/Api";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -27,9 +27,11 @@ export default function ActionAreaCard({
   expired
 
 }) {
-  const MAX_TITLE_LENGTH = 14;
+  const isMobile = useMediaQuery("(max-width: 600px)");
+  const MAX_TITLE_LENGTH = isMobile?12:15;
 
   const [check, setcheck] = useState(0);
+
   const truncatedTitle =
    title && title.length > MAX_TITLE_LENGTH
       ? `${title.substring(0, MAX_TITLE_LENGTH)}...`
@@ -174,7 +176,7 @@ export default function ActionAreaCard({
 </div>
       <CardContent>
         <Box display='flex' justifyContent='space-between'>
-          <Typography sx={{fontSize:{xs:12,sm:14,md:25}}} gutterBottom variant="h5" component="div">
+          <Typography sx={{fontSize:{xs:12,sm:14,md:25}}} gutterBottom variant="h5" component="div" numberOfLines={1}>
             {truncatedTitle}
           </Typography>
           <IconButton disableRipple onClick={() => fav(y)} sx={{padding: 0}}>

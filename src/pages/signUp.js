@@ -12,7 +12,8 @@ import {
   Link,
   IconButton,
   InputAdornment,
-  MenuItem
+  MenuItem,
+  useMediaQuery
 } from "@mui/material";
 import image from "../assets/logo.jpg";
 import { PhotoCamera } from "@mui/icons-material";
@@ -61,7 +62,10 @@ const SignUp = () => {
   const [city,setCity]=useState(null)
   const { values, setValues, hanndleInputChange, errors, setErrors } =
     Formcontrol(initial);
-
+    const isMobile = useMediaQuery("(max-width: 600px)");
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }, []);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPassword1 = () => setShowPassword1((show1) => !show1);
   const check = (
@@ -150,13 +154,13 @@ const SignUp = () => {
   };
   const paperStyle = {
     padding: 20,
-    height: "auto",
-    width: 600,
+    height: isMobile?"auto":"auto",
+    width: isMobile?"350px":600,
     margin: "20px auto",
   };
   console.log(values.age)
   return (
-    <Grid>
+    <Grid sx={{marginTop:{xs:"65px",md:"90px"}}}>
       {dis != null ? (
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="error">{dis}</Alert>
@@ -308,6 +312,7 @@ const SignUp = () => {
                 Name="age"
                 value={values.age}
                 change={hanndleInputChange}
+               
               ></Datepicker>
             </Grid>
             <Type1Field
@@ -337,7 +342,7 @@ const SignUp = () => {
           Sign In
         </Button>
 
-        <Typography style={{ marginLeft: 200 }}>
+        <Typography sx={{ marginLeft:{xs:0,md:"200px"} }}>
           Already have an account?
           <Link href="/login"> Sign In</Link>
         </Typography>

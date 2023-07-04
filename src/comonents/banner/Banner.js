@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MyButton from "./Button"
-
+import { useMediaQuery } from "@mui/material";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
@@ -61,6 +61,9 @@ const Hero = styled.section`
   height: 720px;
   width: 100%;
   //   top: 104px;
+  @media screen and (max-width: 600px) {
+    height: 200px;
+  }
 `;
 const GradientOverlay = styled.div`
   background: linear-gradient(
@@ -87,7 +90,7 @@ const TextContainer = styled.div`
   position: absolute;
   width: 512px;
   color: #fff;
-  font-size: 25px;
+  font-size: 30px;
   height: 160px;
   top: 260px;
   left: 150px;
@@ -96,6 +99,12 @@ const TextContainer = styled.div`
   & h1 {
     font-weight: 700;
     margin-bottom: 2rem;
+  }
+  @media screen and (max-width: 600px) {
+    top: 100px;
+    left:60px;
+    font-size: 25px;
+
   }
 `;
 const Right = styled.div`

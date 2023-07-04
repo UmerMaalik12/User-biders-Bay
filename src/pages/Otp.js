@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert} from '@mui/material'
+import { Grid,Box,Paper, Typography,Button,IconButton,Stack,Alert,useMediaQuery} from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import { Type1Field ,Type2Field} from '../comonents/formcontrol/Fields';
 import MailIcon from "@mui/icons-material/Mail";
@@ -12,7 +12,6 @@ import api from '../Config/Api'
 export default function Otp() {
     const theme = useTheme();
     const navigate = useNavigate();
-    const paperStyle={padding:20,height:"450px",width:800,margin:"20px auto"}
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const [email,setEmail] = useState(null);
@@ -24,11 +23,14 @@ export default function Otp() {
     const handleClickShowPassword2 = () => setShowPassword2((show2) => !show2);
     const [otpValue, setOtpValue] = useState('');
     const [dis, setdis] = useState(null);
+    const isMobile = useMediaQuery("(max-width: 600px)");
     const [change,setChange]=useState({"oldPassword":"",
   "newPassword":"",
   "rePassword":""});
 
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const handleOtpChange = (otp) => {
     setOtpValue(otp);
   };
@@ -67,6 +69,7 @@ export default function Otp() {
         });
         
      }
+
      const verify=(email,OTP)=>{
         api
         .post("/forget_password/verify-otp", {
@@ -115,6 +118,8 @@ export default function Otp() {
       console.log("this is error");
     });
   }
+
+  const paperStyle={padding:20,height:"450px",width:isMobile?350:800,margin:"20px auto"}
   return (
     <Grid>  <Box sx={theme.mixins.toolbar} />
      {dis != null ? (
@@ -125,8 +130,8 @@ export default function Otp() {
         <div>{null}</div>
       )}
     <Paper elevation={10} align="center" style={paperStyle}>
-        <Grid  align="center" display={flag1} sx={{marginTop:"90px",width:"70%"}}>
-            <Typography variant='h5'>
+        <Grid  align="center" display={flag1} sx={{marginTop:"90px",width:{xs:"90%",md:"705"}}}>
+            <Typography variant='h5' sx={{fontSize:{xs:15,md:25}}}>
                 Please Enter Your Email For Verification Code
             </Typography>
             <Type1Field label="Email"  
@@ -152,8 +157,8 @@ export default function Otp() {
         </Button>
         
         </Grid>
-        <Grid align="center" display={flag2} sx={{marginTop:"90px",width:"70%",alignContent:"center",alignItems:"center"}}>
-            <Typography variant='h6' sx={{marginBottom:"20px"}}>Please Enter The Code Sent to {MaskedMail}</Typography>
+        <Grid align="center" display={flag2} sx={{marginTop:"90px",width:{xs:"100%",md:"70%"},alignContent:"center",alignItems:"center"}}>
+            <Typography variant='h6' sx={{marginBottom:"20px",fontSize:{xs:15,md:25}}}>Please Enter The Code Sent to {MaskedMail}</Typography>
         <OTPDigitsInput onOtpChange={handleOtpChange}/>
         <Grid sx={{width:"100%",alignItems:"center"} }>
         <Button
@@ -177,8 +182,8 @@ export default function Otp() {
         </Grid>
         
         </Grid>
-        <Grid align="center" display={flag3} sx={{width:"70%",marginTop:"75px"}}>
-            <Typography variant='h5' sx={{marginBottom:"20px"}}>Reset Your Password</Typography>
+        <Grid align="center" display={flag3} sx={{width:{xs:"100%",md:"70%"},marginTop:"75px"}}>
+            <Typography variant='h5' sx={{marginBottom:"20px",fontSize:{xs:15,md:25}}}>Reset Your Password</Typography>
               <Type2Field
                 Label="New Password"
                 style={{ marginBottom: 10, width: "100%" }}
@@ -225,6 +230,7 @@ export default function Otp() {
                   backgroundColor: "black",
                   color: "white",
                 },
+                marginLeft:{xs:"60px",md:"150px"}
               }}
             >
               Change Password

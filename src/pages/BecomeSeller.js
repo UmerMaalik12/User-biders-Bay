@@ -46,6 +46,9 @@ const BecomeSeller = () => {
     width: 600,
     margin: "150px auto",
   };
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const Setvalue = (e) => {
     if (e.target.name == "front") {
       setFront(e.target.files[0]);
@@ -183,11 +186,11 @@ const BecomeSeller = () => {
           <Button
             sx={{
               backgroundColor: "black",
-              width: "50%",
+              width: {xs:"70%",md:"53%"},
               alignSelf: "center",
               marginTop: "15px",
               marginBottom: "15px",
-
+              fontSize:{xs:"11px",md:"15px"},
               "&:hover": {
                 backgroundColor: "black",
                 color: "white",
@@ -224,11 +227,11 @@ const BecomeSeller = () => {
           <Button
             sx={{
               backgroundColor: "black",
-              width: "50%",
+              width: {xs:"70%",md:"50%"},
               alignSelf: "center",
               marginTop: "15px",
               marginBottom: "15px",
-
+              fontSize:{xs:"11px",md:"15px"},
               "&:hover": {
                 backgroundColor: "black",
                 color: "white",
@@ -289,7 +292,9 @@ const BecomeSeller = () => {
           "&:hover": {
             backgroundColor: "black",
             color: "white",
+           
           },
+       
         }}
         fullWidth={true}
       >

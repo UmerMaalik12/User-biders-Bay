@@ -32,7 +32,10 @@ export default function BidProduct(props) {
   const [city, setCity] = useState(null);
   const [filtered,setFiltered] = useState(null);
   const [PostExpired,setPostExpired] = useState(1)
-
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const getSubcategory = (x) => {
     console.log("in start");
 
@@ -47,7 +50,7 @@ export default function BidProduct(props) {
     api
       .get("/products/bid/")
       .then((response) => {
-        console.log(response);
+        console.log("what is the bid",response.data.data.allProducts);
         setProducts(response.data.data.allProducts);
         // setDummy(response.data.data.allProducts);
       })
@@ -75,7 +78,7 @@ export default function BidProduct(props) {
       .catch((error) => {
         console.log(error);
       });
-
+      
 
 
   }, []);
@@ -123,10 +126,11 @@ export default function BidProduct(props) {
     setFilterValue(initial);
   };
 useEffect(() => {
-  
+  console.log("masla ha");
    
   if(props.Feature!==null && Products!==null)
   {
+    console.log("product in check",Products);
     const converted = props.Feature.map((feature) => {
       return ChangeObject(feature);
     }).filter((obj) => obj !== null);
@@ -134,9 +138,11 @@ useEffect(() => {
     setDummy(converted)
     const filteredProducts = Products.filter((item) => !props.Feature.some((featureItem) => featureItem.postId._id === item._id));
     setFiltered((prevFiltered) => [...prevFiltered, ...filteredProducts]);
-    setDummy((prevFiltered) => [...prevFiltered, ...filteredProducts])
+    setDummy((prevFiltered) => [...prevFiltered, ...filteredProducts]);
+    
   }
 },[props.Feature,Products])
+
 const ChangeObject=(item)=>{
   if(item.postId.productType=="Bidding Item")
   {

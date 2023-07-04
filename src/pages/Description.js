@@ -92,6 +92,9 @@ export default function (props) {
   //     "seller-description-paper"
   //   ).style.marginTop = `${marginTop}px`;
   // }, [location.state.x.description]);
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   const convertData = (dateString) => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long",day:"numeric" };
@@ -207,11 +210,9 @@ export default function (props) {
           comment: "",
         });
         console.log(response);
-      })
-      .catch(function (error) {
-        //  console.log(error);
-      });
-    api
+        if(response)
+        {
+          api
       .get(`/comment/${y}`)
       .then(function (response) {
         console.log("coments", response);
@@ -221,6 +222,12 @@ export default function (props) {
       .catch(function (error) {
         console.log("this is error");
       });
+        }
+      })
+      .catch(function (error) {
+        //  console.log(error);
+      });
+    
   };
   const fav = (postId) => {
     api
@@ -366,6 +373,31 @@ const ResumeBid=()=>
     console.log("this is error");
   });
 }
+function getDaysAgo(postDate) {
+  const now = new Date();
+  const posted = new Date(postDate);
+
+
+  const nowDate = now.getDate();
+  const nowMonth = now.getMonth();
+  const nowYear = now.getFullYear();
+
+  const postedDate = posted.getDate();
+  const postedMonth = posted.getMonth();
+  const postedYear = posted.getFullYear();
+
+  if (
+    nowDate === postedDate &&
+    nowMonth === postedMonth &&
+    nowYear === postedYear
+  ) {
+    return 'Today';
+  } else {
+    const timeDiff = Math.abs(now.getTime() - posted.getTime());
+    const daysAgo = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return `${daysAgo}d`;
+  }
+}
   return (
     <Container maxWidth="lg" sx={{ mb: 5 }}>
       <Box sx={theme.mixins.toolbar} />
@@ -404,6 +436,7 @@ const ResumeBid=()=>
                 height: 250,
                 overflow: "scroll",
                 padding: 20,
+              
               }}
             >
               {comments.length == 0 ? (
@@ -427,33 +460,39 @@ const ResumeBid=()=>
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-start",
+                        position: "relative",
                       }}
                     >
                       <Paper sx={{ px: 3, py: 1 }}>
                         <Box display="flex">
+                          <div style={{ height: 30, position: "relative" }}>
                           {p.userId._id==location.state.x.userId._id?<Badge
   overlap="circular"
-  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+  anchorOrigin={{ vertical: 'bottom', horizontal: 'right'}}
   badgeContent={
-    <LocalPoliceRoundedIcon sx={{fontSize:"20px"}}/>
+    <LocalPoliceRoundedIcon sx={{fontSize:"20px",position:"absolute",top:0, right:0}}/>
   }
+
 >
   <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
 </Badge>: <Avatar sx={{width:30,height:30}}/>}
-                         
+</div>
 
                           <Stack pl={1} pt={0.2}>
                             <Typography variant="body1" color="text.disable">
                               {p.userId.firstName} {p.userId.lastName}
                             </Typography>
+                            <div  style={{ display: "inline" }}>
                             <Typography
                               variant="subtitle1"
                               pt={0.5}
                               color="textSecondary"
                               lineHeight={1.2}
                             >
-                              {p.comment}
+                              {p.comment} 
                             </Typography>
+                            <Typography  sx={{ textAlign: 'right' }} variant="subtitle2" >{getDaysAgo(p.timestamp)}</Typography>
+                            </div>
                           </Stack>
 
                           {/* <Typography
@@ -621,7 +660,7 @@ const ResumeBid=()=>
                       <Grid item ml={1}>
                         <Stack sx={{ lineHeight: "1" }}>
                           <Typography variant="subtitle1" color="text.disable">
-                            {p.userId.firstName}
+                            {p.userId.firstName} {p.userId.lastName}
                           </Typography>
                           
                         </Stack>

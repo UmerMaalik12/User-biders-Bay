@@ -255,6 +255,7 @@ const Navbar = (props) => {
                 aria-label="search"
                 onClick={() => {
                   navigate("/Search", { state: { Data: search } });
+                  setSearch("")
                 }}
               >
                 <SearchIcon color="primary" fontSize="medium" />

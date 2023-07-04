@@ -142,10 +142,10 @@ console.log("hello");
         className="w-full h-full object-fit-fill rounded-2xl bg-center bg-cover duration-500 md:h-30"
         alt="Slider Image"
       />
-      <div className="hidden group-hover:block absolute top-[20%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer md:top-[50%]" >
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer md:top-[50%]" >
         <BsChevronCompactLeft onClick={prevSlide} size={30} />
       </div>
-      <div className="hidden group-hover:block absolute top-[20%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer md:top-[50%]">
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer md:top-[50%]">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
       {props.ShowDelete==true && slide!=="https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"?

@@ -17,7 +17,7 @@ import { BASE_URL } from "../Config/constant";
 import CardUpdate from "../comonents/updateCard";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 export default function (props) {
   const location = useLocation();
   const theme = useTheme();
@@ -37,6 +37,9 @@ export default function (props) {
     const options = { year: "numeric", month: "long" };
     return date.toLocaleDateString("en-US", options);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   useEffect(() => {
     if (location.state.Data == null) {
       console.log("wow scenes",location.state.Info);
@@ -182,9 +185,24 @@ if(userData!==" " && userData!==undefined)
         <Typography variant="h6" pl={2}>
           Seller Post
         </Typography>
-        {sellerproduct == null || sellerproduct.length == 0 ? (
+        {sellerproduct == null ? (
           <Empty />
         ) : (
+          sellerproduct.length == 0?<Box sx={{
+            display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
+
+  width:"100%",
+        
+  
+          }}><Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}><ProductionQuantityLimitsIcon sx={{fontSize:"100px" }}/> <Typography variant="h4">No Product found</Typography></Box></Box>:
+          
           <Grid container>
             {sellerproduct.map((p, index) => {
               // return (
@@ -218,7 +236,7 @@ if(userData!==" " && userData!==undefined)
               props.Feature.some(feature => feature.postId._id === p._id);
                       
                       return (
-                        p.StatusOfActive && (
+                       
                           <Grid item xs={6} sm={4} md={4} key={index}>
                             {isFeatured ? (
                               <CardUpdate
@@ -257,7 +275,7 @@ if(userData!==" " && userData!==undefined)
                               />
                             )}
                           </Grid>
-                        )
+                    
                       );
             })}
           </Grid>

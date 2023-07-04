@@ -1,10 +1,13 @@
 import { Grid, Typography,Box,Container} from '@mui/material'
-import React from 'react'
+import {React,useEffect} from 'react'
 import { useTheme } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Inspection() {
     const theme = useTheme();
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }, []);
     const banksInLahore = [
         {
           name: 'Habib Bank Limited (HBL)',
@@ -40,25 +43,25 @@ export default function Inspection() {
         
       ];
  return (
-    <Container maxWidth="lg" sx={{ marginTop:"100px",border:"2px solid green",height:"100em",sm:{height:"100em"},xs:{height:"1000em"}}} >
+    <Container maxWidth="lg" sx={{ marginTop:"100px",height:{xs:"140em",md:"110em"}}} >
         <Box sx={{xs:{marginBottom:"50px"}}} >
-            <Typography variant='h3'>Banks</Typography>
+            <Typography variant='h4'>Banks</Typography>
             {banksInLahore.map((p)=>(
-                <div>
+                <div style={{marginBottom:"10px"}}>
                  <Typography>
                     {p.name}
                  </Typography>
                  <Typography>
                  {p.address}
               </Typography>
-              <a href={p.googleMapsLink} target="_blank" rel="noopener noreferrer">
+              <a href={p.googleMapsLink} target="_blank" rel="noopener noreferrer" >
                       Navigate to Google Maps
                     </a>
                    
               </div>
             ))}
            
-           <Typography variant='h3'>Electronics</Typography>
+           <Typography variant='h4' sx={{marginTop:"15px"}}>Electronics</Typography>
            <Typography>
                     Hafiz Center
                  </Typography>
@@ -68,7 +71,7 @@ export default function Inspection() {
               <a href="https://www.google.com/maps/place/Hafeez+Centre,+Block+E1+Block+E+1+Gulberg+III,+Lahore,+Punjab/@31.5159977,74.3428656,17z/data=!3m1!4b1!4m6!3m5!1s0x39190458dd8b3dfb:0xf4339935ef318b45!8m2!3d31.5159977!4d74.3428656!16s%2Fg%2F1ptyp9cr_?entry=ttu" target="_blank" rel="noopener noreferrer">
                       Navigate to Google Maps
                     </a>
-                    <Typography variant='h3'>Vehicles</Typography>
+                    <Typography variant='h4' sx={{marginTop:"15px"}}>Vehicles</Typography>
            <Typography>
                     Pak Wheels
                  </Typography>
@@ -76,7 +79,7 @@ export default function Inspection() {
               <a href="https://www.pakwheels.com/products/pakwheels-inspection" target="_blank" rel="noopener noreferrer">
                       Navigate to Pak Wheels
                     </a>
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                    Car Test
                  </Typography>
                  
@@ -84,14 +87,14 @@ export default function Inspection() {
                       Navigate to Car Test
                     </a>
                     
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                 Gari.pk
                  </Typography >
                  
               <a href="https://www.gari.pk/" target="_blank" rel="noopener noreferrer">
-                      Navigate to Car Test
+                      Navigate to gari.pk
                     </a> 
-                    <Typography variant='h3'>Art Work</Typography>
+                    <Typography variant='h4' sx={{marginTop:"15px"}}>Art Work</Typography>
                     <Typography>
                     Oyster Art Gallery
                  </Typography>
@@ -101,7 +104,7 @@ export default function Inspection() {
                  <a href="https://www.google.com/maps/place/Oyster+Art+Gallery/@31.5133604,74.3517349,18z/data=!4m6!3m5!1s0x39190453e1e2d1ed:0x16b80f86ecd55b2c!8m2!3d31.5130711!4d74.3524613!16s%2Fg%2F11cn8xqlq4?entry=ttu" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Hamail Art Galleries
                  </Typography>
                  <Typography>
@@ -110,7 +113,7 @@ export default function Inspection() {
                  <a href="https://www.google.com/maps/place/Hamail+Art+Galleries/@31.5148042,74.2779071,12z/data=!4m6!3m5!1s0x39190457250aba53:0x12f1f2aaac1f935e!8m2!3d31.5148233!4d74.3479473!16s%2Fg%2F1tffbl06?entry=ttu" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography variant='h3'>Tickets/Stamps</Typography>
+                    <Typography variant='h4' sx={{marginTop:"15px"}}>Tickets/Stamps</Typography>
                     <Typography>
                     Pakistan Post Office
                  </Typography>
@@ -120,7 +123,7 @@ export default function Inspection() {
                  <a href="https://goo.gl/maps/zhGeSTSaoezZR7EU9" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Pakistan Post Office
                  </Typography>
                  <Typography>
@@ -129,7 +132,7 @@ export default function Inspection() {
                  <a href="https://goo.gl/maps/WdKhmeZv4DsWr2ND8" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Pakistan Post Office
                  </Typography>
                  <Typography>
@@ -138,7 +141,7 @@ export default function Inspection() {
                  <a href="https://goo.gl/maps/D2hzDTYHgVepkKrW8" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Pakistan Post Office
                  </Typography>
                  <Typography>
@@ -147,7 +150,7 @@ export default function Inspection() {
                  <a href="https://goo.gl/maps/7ELa5wXcTBV7jSRh7" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Pakistan Post Office
                  </Typography>
                  <Typography>
@@ -156,7 +159,7 @@ export default function Inspection() {
                  <a href="https://goo.gl/maps/DsNzWvKcG42y9YZM7" target="_blank" rel="noopener noreferrer">
                       Navigate to google maps
                     </a> 
-                    <Typography>
+                    <Typography sx={{marginTop:"10px"}}>
                     Pakistan Post Office
                  </Typography>
                  <Typography>

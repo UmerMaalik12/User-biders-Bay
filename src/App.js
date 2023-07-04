@@ -43,6 +43,7 @@ function App() {
   const [wishlist, setWhishlist] = useState([]);
   const [token, setToken] = useState(" ");
   const [Feature,SetFeature]=useState(null)
+  const [tag,settag]=useState(0)
 
   useEffect(() => {
     console.log("start use");
@@ -77,7 +78,7 @@ function App() {
       });
     
   
-  }, []);
+  }, [ tag]);
   useEffect(()=>{
     api
     .get("/favorite/")
@@ -88,7 +89,7 @@ function App() {
     .catch((error) => {
       console.log(error);
     });
-  },[])
+  },[token])
   const PrivateRoute = ({role, children }) => {
     let user = JSON.parse(localStorage.getItem("user Info")); 
     console.log("aa->",user);
@@ -111,15 +112,12 @@ function App() {
           <Route exact path="Inspection" element={<Inspection />} />
          
           <Route exact path="/" element={<Home setWhishlist={setWhishlist} Feature={Feature}/>} />
-          <Route exact path="bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />
+          <Route  exact path="bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />
           <Route
             exact path="Used"
             element={<UsedItem setWhishlist={setWhishlist} Feature={Feature} />}
           />
-          <Route
-            exact path="Details"
-            element={<PrivateRoute role={["seller","buyer"]}><Description setWhishlist={setWhishlist} /></PrivateRoute>}
-          />
+        
           
           <Route exact path="bsprofile" element={<BuyerSellerProfile Feature={Feature}/>} />
           
@@ -135,11 +133,15 @@ function App() {
               <PrivateRoute role={["seller","buyer"]}><Favourite wishlist={wishlist} setWhishlist={setWhishlist} Feature={Feature}/></PrivateRoute>
               
             }
-          />
+          /> 
           <Route exact path="bseller" element={<PrivateRoute role={["seller","buyer"]}><BecomeSeller /></PrivateRoute>} />
           
-          <Route exact path="Edit" element={<PrivateRoute role={["seller","buyer"]}> <EditPost /></PrivateRoute>} />
+          <Route exact path="Edit" element={<PrivateRoute role={["seller"]}> <EditPost settag={settag} tag={tag}/></PrivateRoute>} />
           <Route exact path="Feature" element={<PrivateRoute role={["seller","buyer"]}><FeaturePost /></PrivateRoute>} />
+          <Route
+            exact path="Details"
+            element={<PrivateRoute role={["seller","buyer"]}><Description setWhishlist={setWhishlist} /></PrivateRoute>}
+          />
           {/* <Route path="/create" element={<Create />} /> */}
         </Routes>
         

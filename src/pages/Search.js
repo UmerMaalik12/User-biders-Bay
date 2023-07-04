@@ -14,7 +14,7 @@ import Empty from "../comonents/EMPTYPAGE/Empty";
 import pacman from "../assets/Loading dots git.gif";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Link, useNavigate } from "react-router-dom";
 
 const initial = {
@@ -152,19 +152,25 @@ export default function Search() {
   };
 
   return (
-    <Grid>
+    <Grid sx={{width:"90%"}}>
       <Box sx={theme.mixins.toolbar} />
       <Box sx={theme.mixins.toolbar} />
 
-      <Box display="flex" justifyContent="space-around" alignItems="center">
-        <Stack direction="row" spacing={1}>
+      <Box display="flex" justifyContent="space-around" alignItems="center" sx={{
+        width: "100%",
+        flexDirection:{xs:"column",md:"row"},
+        marginBottom:{xs:"20px",md:"20px"}
+       
+       
+      }}>
+        <Stack direction={{sm: 'row', xs: 'column' }} spacing={1} sx={{width:{xs:"100%",md:"auto"}}}>
           <Filter
             label="Category"
             Name="Category"
             data={C != null ? C : [0, 1, 2]}
             value={FilterValue.Category}
             Change={FilterChange}
-            style={{ width: 120 }}
+            // style={{ width: 120,}}
           />
 
           <Filter
@@ -173,7 +179,7 @@ export default function Search() {
             data={SubCategory != null ? SubCategory : [0, 1, 2]}
             value={FilterValue.SubCategory}
             Change={FilterChange}
-            style={{ width: 150 }}
+            // style={{ width: 150}}
           />
 
           <Filter
@@ -182,11 +188,11 @@ export default function Search() {
             data={city != null ? city : [0, 1, 2]}
             value={FilterValue.city}
             Change={FilterChange}
-            style={{ width: 200 }}
+            // style={{ width: 200}}
           />
         </Stack>
 
-        <Box>
+        <Box sx={{marginTop:{xs:"35px",md:"0px"}}}>
           <Ranger
             Name="PriceRange"
             Change={FilterChange}
@@ -217,15 +223,31 @@ export default function Search() {
               : location.state.Data}
           </Typography>
         </Grid>
-        <Grid container sx={{marginLeft:10}}>
-          {Products == null || Products.length == 0 ? (
+        <Grid container sx={{marginLeft:{md:10,xs:2}}}>
+          {Products == null ? (
             <Grid item sm={12}>
              <Empty/>
             </Grid>
           ) : (
+            Products.length == 0?<Box sx={{
+              display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '70vh',
+ 
+    width:"100%",
+          
+    
+            }}><Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}><ProductionQuantityLimitsIcon sx={{fontSize:"100px" }}/> <Typography variant="h4">No Product found</Typography></Box></Box>:
             Products.map((p, index) => {
               return (
-                <Grid item xs={2} sm={4} md={3} key={index}>
+                
+                <Grid item xs={6} sm={4} md={3} key={index}>
+                  {p.StatusOfActive==true?
                   <CardUpdate
                     click={() => handleDetails(p, "used")}
                     title={p.title}
@@ -235,7 +257,7 @@ export default function Search() {
                         : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
                     }
                     price={p.productPrice}
-                  ></CardUpdate>
+                  ></CardUpdate>:null}
                 </Grid>
               );
             })
