@@ -191,7 +191,7 @@ const [catFlag,setCatFlag] = useState(false);
   };
 
   return (
-    <AppBar elevation={0}>
+    <AppBar elevation={0} >
       <Toolbar
         sx={{
           background: "#ffffff",

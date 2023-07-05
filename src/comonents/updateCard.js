@@ -10,6 +10,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import Coundown from '../comonents/Coundown'
 import VerifiedIcon from '@mui/icons-material/Verified';
 import "./updatedCard.css"
+
 export default function ActionAreaCard({
   url,
   title,
@@ -28,7 +29,7 @@ export default function ActionAreaCard({
 
 }) {
   const isMobile = useMediaQuery("(max-width: 600px)");
-  const MAX_TITLE_LENGTH = isMobile?12:15;
+  const MAX_TITLE_LENGTH = isMobile?7:15;
 
   const [check, setcheck] = useState(0);
 
@@ -115,9 +116,9 @@ export default function ActionAreaCard({
         borderRadius: "5%",
         boxShadow: "5px 4px 8px 0px rgba(0, 0, 0, 0.2)",
         "@media (max-width: 600px)": {
-          maxWidth: 150,
-          minWidth: 150,
-          margin: 1,
+          maxWidth: 120,
+          minWidth: 120,
+          
           borderRadius: "3%",
         },
       }}

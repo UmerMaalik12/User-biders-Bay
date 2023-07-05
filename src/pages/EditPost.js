@@ -52,6 +52,7 @@ const EditPost=(props)=>
   const PostDetails=location.state.ProductDetails
   console.log(PostDetails);
   const [images,setimages]=useState(PostDetails.images);
+  const [NewImages,SetNewImages]=useState(null)
   const isMobile = useMediaQuery("(max-width: 600px)");
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
@@ -182,7 +183,9 @@ useEffect(() => {
       width:300
     
     },}
-    
+    useEffect(()=>{
+      SetNewImages(postValue.product_picture)
+    },[postValue.product_picture])
     return(
 
         <Grid>
@@ -205,7 +208,7 @@ useEffect(() => {
                ShowDelete={true}
               data={PostDetails}
               // updateImages={postValue.product_picture}
-              image={PostDetails.images.length
+              image={PostDetails && PostDetails.images && PostDetails.images.length
                   ? PostDetails.images
                   : "https://feb.kuleuven.be/drc/LEER/visiting-scholars-1/image-not-available.jpg/image"
               }
@@ -316,7 +319,17 @@ useEffect(() => {
           helperText={errors.description}
           style={{width:'100%'}}/>
                 </Grid>
-                
+                {NewImages && NewImages.length !== 0 && (
+  <Box sx={{ border: "1px solid black", marginTop: "10px", width: "100%" }} display="flex" flexWrap="wrap">
+    {Array.from(NewImages).map((file, index) => (
+      <Box sx={{ display: "flex", alignItems: "center", width: "100%", paddingLeft: "5px", paddingTop: "5px", background: index % 2 === 0 ? "#f0f0f0" : "#e0e0e0", borderRadius: "5%" }}>
+        <img src={URL.createObjectURL(file)} alt={file.name} style={{ width: "50px", height: "50px", marginRight: "5px" }} />
+        <Typography key={index}>{file.name}</Typography>
+      </Box>
+    ))}
+  </Box>
+)}
+
           <Grid xs={12} container sx={{marginTop:3,display:"flex",alignItems:"center",flexDirection:"column"}}>
      
       <Button sx={{backgroundColor: "black",
@@ -325,7 +338,7 @@ useEffect(() => {
   backgroundColor: "black",
   color: "white",
 }}} variant="contained" component="label">
-        Upload
+        Upload Images
         <input  hidden accept="image/*" name='product_picture'  onChange={postChange} multiple type="file" />
       </Button>
       

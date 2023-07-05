@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../comonents/navbar";
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Button, Container, Grid, Stack,Typography } from "@mui/material";
 import Card from "../comonents/card";
 import { AppbarSpace } from "../comonents/AppbarSpace";
 import axios from "axios";
@@ -13,7 +13,7 @@ import Ranger from "../comonents/PriceSlider/Slider";
 import Empty from "../comonents/EMPTYPAGE/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 const initial = {
   Category: "",
   SubCategory: "",
@@ -140,6 +140,10 @@ useEffect(() => {
     setFiltered((prevFiltered) => [...prevFiltered, ...filteredProducts]);
     setDummy((prevFiltered) => [...prevFiltered, ...filteredProducts]);
     
+  }
+  else if( Products!==null)
+  {
+    setFiltered(Products)
   }
 },[props.Feature,Products])
 
@@ -312,11 +316,25 @@ const postResumed=()=>{
       </Grid>
     </Container> */}
     <Grid container >
-        {filtered == null || filtered.length === 0 ? (
+        {filtered == null  ? (
           <Grid item sm={12}>
             <Empty />
           </Grid>
         ) : (
+          filtered.length == 0?<Box sx={{
+            display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
+
+  width:"100%",
+        
+  
+          }}><Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}><ProductionQuantityLimitsIcon sx={{fontSize:"100px" }}/> <Typography variant="h4">No Product Found</Typography></Box></Box>:
           filtered.map((p, index) => {
             const isFeatured =
     props.Feature !== null &&

@@ -339,7 +339,7 @@ const SignUp = () => {
             },
           }}
         >
-          Sign In
+          Sign Up
         </Button>
 
         <Typography sx={{ marginLeft:{xs:0,md:"200px"} }}>

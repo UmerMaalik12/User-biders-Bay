@@ -107,39 +107,39 @@ function App() {
         {/* <Header/> */}
         <Navbar wishlist={wishlist}/>
         <Routes>
-          <Route exact path="login" element={<Login setToken={setToken}/>} />
-          <Route exact path="signup" element={<SignUP />} />
-          <Route exact path="Inspection" element={<Inspection />} />
+          <Route exact path="/login" element={<Login setToken={setToken}/>} />
+          <Route exact path="/signup" element={<SignUP />} />
+          <Route exact path="/Inspection" element={<Inspection />} />
          
           <Route exact path="/" element={<Home setWhishlist={setWhishlist} Feature={Feature}/>} />
-          <Route  exact path="bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />
+          <Route  exact path="/bid" element={<BidPage setWhishlist={setWhishlist}  Feature={Feature}/>} />
           <Route
-            exact path="Used"
+            exact path="/Used"
             element={<UsedItem setWhishlist={setWhishlist} Feature={Feature} />}
           />
         
           
-          <Route exact path="bsprofile" element={<BuyerSellerProfile Feature={Feature}/>} />
+          <Route exact path="/bsprofile" element={<BuyerSellerProfile Feature={Feature}/>} />
           
-          <Route exact path="Search" element={<Search Feature={Feature}/>} />
+          <Route exact path="/Search" element={<Search Feature={Feature}/>} />
           
-          <Route exact path="ForgotPassword" element={<Otp />} />
+          <Route exact path="/ForgotPassword" element={<Otp />} />
       
-          <Route exact path="account" element={<PrivateRoute role={["seller","buyer"]}><Account setWhishlist={setWhishlist} setToken={setToken}/></PrivateRoute>} />
-          <Route exact path="post" element={<PrivateRoute role={["seller"]}><Post /></PrivateRoute>} />
+          <Route exact path="/account" element={<PrivateRoute role={["seller","buyer"]}><Account setWhishlist={setWhishlist} setToken={setToken}/></PrivateRoute>} />
+          <Route exact path="/post" element={<PrivateRoute role={["seller"]}><Post /></PrivateRoute>} />
           <Route
-            exact path="favourite"
+            exact path="/favourite"
             element={
               <PrivateRoute role={["seller","buyer"]}><Favourite wishlist={wishlist} setWhishlist={setWhishlist} Feature={Feature}/></PrivateRoute>
               
             }
           /> 
-          <Route exact path="bseller" element={<PrivateRoute role={["seller","buyer"]}><BecomeSeller /></PrivateRoute>} />
+          <Route exact path="/bseller" element={<PrivateRoute role={["seller","buyer"]}><BecomeSeller /></PrivateRoute>} />
           
-          <Route exact path="Edit" element={<PrivateRoute role={["seller"]}> <EditPost settag={settag} tag={tag}/></PrivateRoute>} />
-          <Route exact path="Feature" element={<PrivateRoute role={["seller","buyer"]}><FeaturePost /></PrivateRoute>} />
+          <Route exact path="/Edit" element={<PrivateRoute role={["seller"]}> <EditPost settag={settag} tag={tag}/></PrivateRoute>} />
+          <Route exact path="/Feature" element={<PrivateRoute role={["seller","buyer"]}><FeaturePost /></PrivateRoute>} />
           <Route
-            exact path="Details"
+            exact path="/Details"
             element={<PrivateRoute role={["seller","buyer"]}><Description setWhishlist={setWhishlist} /></PrivateRoute>}
           />
           {/* <Route path="/create" element={<Create />} /> */}

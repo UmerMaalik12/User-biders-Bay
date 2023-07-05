@@ -31,6 +31,15 @@ export default function Favorite(props) {
   const [city, setCity] = useState(null);
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
+    api
+    .get("/users/cities")
+    .then((response) => {
+      console.log(response.data.data);
+      setCity(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }, []);
   const getSubcategory = (x) => {
     console.log("in start");

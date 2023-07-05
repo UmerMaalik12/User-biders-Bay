@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../comonents/navbar";
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Button, Container, Grid, Stack,Typography } from "@mui/material";
 import Card from "../comonents/card";
 import { AppbarSpace } from "../comonents/AppbarSpace";
 import axios from "axios";
@@ -13,7 +13,7 @@ import Ranger from "../comonents/PriceSlider/Slider";
 import Empty from "../comonents/EMPTYPAGE/Empty";
 import pacman from "../assets/Bean Eater-1s-200px.gif";
 import { useTheme } from "@mui/material/styles";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Link, useNavigate } from "react-router-dom";
 const initial = {
   Category: "",
@@ -126,7 +126,7 @@ export default function UsedItems(props) {
     console.log("testing 123");
     console.log("what is ,",props.Feature);
      
-    if(props.Feature!==null && Products!==null)
+    if(props.Feature!==null  && Products!==null)
     {
       const converted = props.Feature.map((feature) => {
         return ChangeObject(feature);
@@ -136,6 +136,10 @@ export default function UsedItems(props) {
       const filteredProducts = Products.filter((item) => !props.Feature.some((featureItem) => featureItem.postId._id === item._id));
       setFiltered((prevFiltered) => [...prevFiltered, ...filteredProducts]);
       setDummy((prevFiltered) => [...prevFiltered, ...filteredProducts])
+    }
+    else if( Products!==null)
+    {
+      setFiltered(Products)
     }
   },[props.Feature,Products])
   const ChangeObject=(item)=>{
@@ -294,11 +298,25 @@ export default function UsedItems(props) {
         )}
       </Grid> */}
        <Grid container>
-        {filtered == null || filtered.length === 0 ? (
+        {filtered == null  ? (
           <Grid item sm={12}>
             <Empty />
           </Grid>
         ) : (
+          filtered.length == 0?<Box sx={{
+            display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
+
+  width:"100%",
+        
+  
+          }}><Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}><ProductionQuantityLimitsIcon sx={{fontSize:"100px" }}/> <Typography variant="h4">No Product Found</Typography></Box></Box>:
           filtered.map((p, index) => {
             const isFeatured =
     props.Feature !== null &&

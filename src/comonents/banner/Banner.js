@@ -9,6 +9,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 
 
 
+
 import img1 from "../../assets/auction pic/eric-terrade-0WQOCx1g8hw-unsplash.jpg";
 import img2 from "../../assets/auction pic/frederick-warren-lOg_fQLHo7s-unsplash.jpg";
 import img3 from "../../assets/auction pic/john-schnobrich-2FPjlAyMQTA-unsplash.jpg";

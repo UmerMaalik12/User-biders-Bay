@@ -110,7 +110,7 @@ const Login = (props) => {
       <Paper elevation={10} style={paperStyle}>
         <Box width='100%'>
         <Grid align="center" sx={{display:"flex",flexDirection:"row",paddingBottom:"10px"}}>
-          <Typography variant="h5" sx={{marginLeft:"200px",marginBottom:"10px"}}
+          <Typography variant="h5" sx={{marginLeft:{xs:"100px",md:"200px"},marginBottom:"10px"}}
           >
             Login
           </Typography>

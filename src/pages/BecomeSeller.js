@@ -161,6 +161,10 @@ const BecomeSeller = () => {
     console.log("all value",Fpic,Bpic,cNuber);
     if(Fpic&&Bpic&&cNuber)
     {
+      let updatedInfo=JSON.parse(localStorage.getItem("user Info"))
+    updatedInfo.statusOfUser="Your req has gone to admin for approval or disapproval"
+    localStorage.setItem("user Info",JSON.stringify(updatedInfo))
+      
       navigate("/account")
     }
   },[Fpic,Bpic,cNuber])

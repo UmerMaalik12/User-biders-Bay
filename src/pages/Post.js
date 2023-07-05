@@ -48,6 +48,7 @@ const Post=()=>
   const [dis, setdis] = useState(null);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 600px)");
+  const [images,setimages]=useState(null)
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
@@ -152,6 +153,12 @@ const Post=()=>
       }
     });
   }
+  useEffect(()=>{
+    setimages(postValue.product_picture)
+  },[postValue.product_picture])
+  useEffect(()=>{
+   console.log("this is the images",images);
+  },[images])
 
     const paperStyle={padding:20,height:"auto",width:isMobile?"350px":600,margin:"20px auto"}
     
@@ -269,6 +276,15 @@ const Post=()=>
           multiline
           rows={4}
           style={{width:'100%'}}/>
+          {images !== null && images.length !== 0?
+         <Box sx={{border:"1px solid black",marginTop:"10px",width:"100%"}} display="flex" flexWrap="wrap">
+  {images !== null && images.length !== 0 && (
+    Array.from(images).map((file, index) => (
+      <Box sx={{display: "flex", alignItems: "center",width:"100%",paddingLeft:"5px",paddingTop:"5px", background: index % 2 === 0 ? "#f0f0f0" : "#e0e0e0",borderRadius:"5%"}}> <img src={URL.createObjectURL(file)} alt={file.name}  style={{ width: "50px", height: "50px",marginRight:"5px" }}/><Typography key={index}>{file.name}</Typography></Box>
+      
+    ))
+  )}
+</Box>:null}
                 </Grid>
                 
           <Grid xs={12} container sx={{marginTop:3,display:"flex",alignItems:"center",flexDirection:"column"}}>
@@ -279,7 +295,7 @@ const Post=()=>
   backgroundColor: "black",
   color: "white",
 }}} variant="contained" component="label">
-        Upload
+        Upload Images
         <input  hidden accept="image/*" name='product_picture'  onChange={postChange} multiple type="file" />
       </Button>
       

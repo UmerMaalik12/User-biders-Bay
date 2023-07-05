@@ -12,7 +12,7 @@ import {
   Box,
   Container,
   IconButton,
-  Stack,TextField,MenuItem
+  Stack,TextField,MenuItem,Tooltip
 } from "@mui/material";
 
 import api from '../Config/Api'
@@ -214,6 +214,9 @@ else{
   )
   .then(response => {
     console.log(response);
+    change.oldPassword=""
+    change.newPassword=""
+    change.rePassword=""
     setinfo(response.data.message)
       setdis(null)
     
@@ -321,7 +324,9 @@ else{
         <Typography variant="h4">My Account</Typography>
         
         <Box component="div" sx={{display: "flex", justifyContent: 'flex-end' }}>
-        <LogoutIcon
+        <Tooltip title="Logout">
+                         <IconButton  sx={{color:"black"}}> 
+                         <LogoutIcon
           onClick={() => {
             localStorage.removeItem("user Info");
             localStorage.removeItem("user token");
@@ -333,6 +338,9 @@ else{
           }}
           sx={{ fontSize: 24 }}
         />
+                       </IconButton>
+                       </Tooltip>
+        
         
         </Box>
         

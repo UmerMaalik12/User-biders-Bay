@@ -280,6 +280,19 @@ export default function (props) {
               // console.log("this is error",error.response.data);
            
             });
+            api
+            .get(`/bidding/${y}`)
+            .then(function (response) {
+              console.log(
+                "all bids",
+                response.data.allBidsOfPost
+                );
+                setAllBids(response.data.allBidsOfPost)
+             
+            })
+            .catch(function (error) {
+              console.log("this is error");
+            });
         }
       })
       .catch(function (error) {
@@ -699,6 +712,7 @@ function getDaysAgo(postDate) {
                     <Divider />
                   </Box>
                 ))}
+               {allBids.length==0? <Typography>No bids</Typography>:null}
               </AccordionDetails>
             </Accordion>
             {editFlag==1 ?null:(
